@@ -265,24 +265,23 @@
 @media (max-width: 640px) { .card-grid--4 { grid-template-columns: 1fr; } }
 
 /* Card em destaque — quebra a uniformidade da grade de serviços: ocupa 2
-   colunas e leva foto de fundo (âncora da keyword, ex: Treinamentos In Company) */
+   colunas e leva foto de fundo (âncora da keyword, ex: Treinamentos In Company).
+   CORRIGIDO: a foto/placeholder é uma camada absoluta única (.card__bg) por
+   trás de TUDO, com gradiente sempre presente (não só no hover) para o texto
+   nunca disputar espaço com um rótulo solto — o card não tem padding próprio;
+   quem paga o respiro interno é .card--featured__body. */
 .card--featured {
   grid-column: span 2;
   position: relative;
   overflow: hidden;
   min-height: 320px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
+  padding: 0;
+  background: var(--color-navy);
   color: var(--color-white);
 }
 @media (max-width: 640px) { .card--featured { grid-column: span 1; } }
-.card--featured .card__bg {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  background: var(--color-navy); /* fallback sólido até termos a foto real */
-}
+
+.card--featured .card__bg { position: absolute; inset: 0; z-index: 0; }
 .card--featured .card__bg img {
   width: 100%;
   height: 100%;
@@ -290,19 +289,23 @@
   transition: transform .4s ease;
 }
 .card--featured:hover .card__bg img { transform: scale(1.03); }
-.card--featured .card__bg::after {
+.card--featured::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: var(--overlay-navy-62);
-}
-.card--featured .card__bg .media__label {
-  position: absolute;
-  bottom: var(--space-2);
-  right: var(--space-2);
   z-index: 1;
+  background: linear-gradient(0deg, rgba(22,32,90,.88) 0%, rgba(22,32,90,.35) 100%);
 }
-.card--featured > *:not(.card__bg) { position: relative; z-index: 1; }
+
+.card--featured__body {
+  position: relative;
+  z-index: 2;
+  min-height: 320px;
+  padding: var(--card-padding);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
 .card--featured h3, .card--featured p { color: var(--color-white); }
 .card--featured .card__icon { color: var(--color-white); }
 .card--featured .btn--tertiary { color: var(--color-white); border-color: var(--color-white); }
@@ -468,29 +471,40 @@
 .section--green .stat__label { color: rgba(255,255,255,.75); }
 
 /* ---------------------------------------------------------------------- */
-/* Fundo em grade com movimento — aproximação própria (componente real da   */
-/* biblioteca SimSite ainda não enviado; ver CONFIRMAR no index.html)       */
-/* Grade de linhas finas com deslocamento contínuo e lento. Opacidade em    */
-/* linha com o manual (máx. 12% sob conteúdo). Camada decorativa, nunca     */
-/* compete com o texto.                                                    */
+/* Fundo em grade com movimento — CONFIRMAR: o arquivo `demo.html` com o    */
+/* componente real da biblioteca (sui-core / fundo-grade-movimento) não     */
+/* está na pasta do projeto — não foi possível "extrair e usar exatamente   */
+/* como está" porque a fonte nunca chegou. O que segue é aproximação        */
+/* própria, fiel ao resultado visual descrito (pontos com deriva lenta e    */
+/* independente), gerada via JS em motion.js e populada em runtime dentro   */
+/* de .fundo-grade-movimento (container). Opacidade de cada ponto fica      */
+/* entre 4% e 10% — dentro do limite de 12% do manual — nunca usa acento    */
+/* fora da paleta da marca. Trocar por CSS/JS reais assim que o arquivo      */
+/* original chegar.                                                        */
 /* ---------------------------------------------------------------------- */
 .fundo-grade-movimento {
   position: absolute;
-  inset: -10%;
-  background-image:
-    linear-gradient(rgba(255, 255, 255, .1) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, .1) 1px, transparent 1px);
-  background-size: 48px 48px;
-  animation: grade-deslocamento 46s linear infinite;
+  inset: 0;
+  overflow: hidden;
   pointer-events: none;
   z-index: 0;
 }
-@keyframes grade-deslocamento {
-  from { background-position: 0 0; }
-  to { background-position: 48px 48px; }
+.fundo-grade-movimento__dot {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: var(--color-white);
+  animation-name: grade-deriva;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+@keyframes grade-deriva {
+  0%, 100% { transform: translateY(0); opacity: var(--dot-o1, .04); }
+  50% { transform: translateY(-16px); opacity: var(--dot-o2, .1); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .fundo-grade-movimento { animation: none; }
+  .fundo-grade-movimento__dot { animation: none; opacity: var(--dot-o1, .04); }
 }
 
 /* ---------------------------------------------------------------------- */
@@ -721,7 +735,7 @@
   inset: 0;
   background: linear-gradient(180deg, rgba(22,32,90,.15) 0%, rgba(22,32,90,.78) 100%);
 }
-.hero__content { max-width: 620px; }
+.hero__content { max-width: 620px; position: relative; z-index: 1; }
 .hero__content .badge { border-color: var(--color-white); color: var(--color-white); }
 .hero__content h1 { color: var(--color-white); }
 
