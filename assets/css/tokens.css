@@ -59,11 +59,8 @@
   --card-padding: 20px;
   --card-shadow: 0 1px 3px var(--shadow-navy-07), 0 8px 20px var(--shadow-navy-05);
 
-  /* Easing custom para transições JS (tilt 3D, retorno de hover) — nunca ease/linear padrão */
-  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
-
   /* ---- Layout ---- */
-  --container-max: 1280px;
+  --container-max: 1200px;
   --container-pad: var(--space-3);
   --header-height: 80px;
 }
