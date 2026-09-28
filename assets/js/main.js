@@ -62,6 +62,25 @@
   });
 
   /* ---------------------------------------------------------------- */
+  /* Filtro de segmento — Cases de Sucesso (Corporativo / Individual)  */
+  /* ---------------------------------------------------------------- */
+  var caseFilterButtons = document.querySelectorAll('[data-filter]');
+  if (caseFilterButtons.length) {
+    var caseTiles = document.querySelectorAll('.case-tile');
+    caseFilterButtons.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        caseFilterButtons.forEach(function (b) { b.classList.remove('is-active'); });
+        btn.classList.add('is-active');
+        var filter = btn.getAttribute('data-filter');
+        caseTiles.forEach(function (tile) {
+          var segment = tile.getAttribute('data-segment');
+          tile.hidden = filter !== 'todos' && segment !== filter;
+        });
+      });
+    });
+  }
+
+  /* ---------------------------------------------------------------- */
   /* Header — sombra ao rolar                                          */
   /* ---------------------------------------------------------------- */
   var header = document.querySelector('[data-site-header]');
