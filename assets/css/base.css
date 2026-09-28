@@ -106,6 +106,10 @@ select:focus-visible,
 .section--gray { background: var(--color-gray-light); }
 .section--navy { background: var(--color-navy); color: var(--color-white); }
 .section--navy h1, .section--navy h2, .section--navy h3 { color: var(--color-white); }
+.section--green { background: var(--color-green); color: var(--color-white); position: relative; overflow: hidden; }
+.section--green h1, .section--green h2, .section--green h3 { color: var(--color-white); }
+.section--green .kicker { color: var(--color-white); opacity: .78; }
+.section--green .container { position: relative; z-index: 1; }
 
 .visually-hidden {
   position: absolute;

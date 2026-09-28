@@ -78,47 +78,54 @@
         <span class="kicker">Modelo de case</span>
         <h2>Estrutura pronta, aguardando conteúdo real</h2>
       </div>
-      <div class="card-grid">
-        <div class="card">
-          <div class="media media--4x3" style="margin:calc(var(--card-padding) * -1) calc(var(--card-padding) * -1) 16px;width:calc(100% + 40px);">
-            <span class="media__label">logo do cliente</span>
-          </div>
-          <div class="kicker">Desafio</div>
-          <p style="margin-bottom:12px;">[a preencher]</p>
-          <div class="kicker">Solução</div>
-          <p style="margin-bottom:12px;">[a preencher]</p>
-          <div class="kicker">Resultado</div>
-          <p style="margin-bottom:12px;">[número a preencher]</p>
-          <div class="kicker">Depoimento</div>
-          <p>"[a preencher]"</p>
-        </div>
-        <div class="card">
-          <div class="media media--4x3" style="margin:calc(var(--card-padding) * -1) calc(var(--card-padding) * -1) 16px;width:calc(100% + 40px);">
-            <span class="media__label">logo do cliente</span>
-          </div>
-          <div class="kicker">Desafio</div>
-          <p style="margin-bottom:12px;">[a preencher]</p>
-          <div class="kicker">Solução</div>
-          <p style="margin-bottom:12px;">[a preencher]</p>
-          <div class="kicker">Resultado</div>
-          <p style="margin-bottom:12px;">[número a preencher]</p>
-          <div class="kicker">Depoimento</div>
-          <p>"[a preencher]"</p>
-        </div>
-        <div class="card">
-          <div class="media media--4x3" style="margin:calc(var(--card-padding) * -1) calc(var(--card-padding) * -1) 16px;width:calc(100% + 40px);">
-            <span class="media__label">logo do cliente</span>
-          </div>
-          <div class="kicker">Desafio</div>
-          <p style="margin-bottom:12px;">[a preencher]</p>
-          <div class="kicker">Solução</div>
-          <p style="margin-bottom:12px;">[a preencher]</p>
-          <div class="kicker">Resultado</div>
-          <p style="margin-bottom:12px;">[número a preencher]</p>
-          <div class="kicker">Depoimento</div>
-          <p>"[a preencher]"</p>
-        </div>
+
+      <div class="cases-filter" role="tablist" aria-label="Filtrar cases por segmento">
+        <button class="cases-filter__btn is-active" data-filter="todos" role="tab" aria-selected="true">Todos</button>
+        <button class="cases-filter__btn" data-filter="corporativo" role="tab" aria-selected="false">Corporativo</button>
+        <button class="cases-filter__btn" data-filter="individual" role="tab" aria-selected="false">Individual</button>
       </div>
+
+      <div class="cases-gallery">
+        <article class="case-tile case-tile--lg" data-segment="corporativo">
+          <div class="media media--4x3"><span class="media__label">logo do cliente</span></div>
+          <div>
+            <div class="kicker">Desafio</div>
+            <p style="margin-bottom:12px;">[a preencher]</p>
+            <div class="kicker">Solução</div>
+            <p style="margin-bottom:12px;">[a preencher]</p>
+            <div class="kicker">Resultado</div>
+            <p style="margin-bottom:12px;">[número a preencher]</p>
+            <div class="kicker">Depoimento</div>
+            <p>"[a preencher]"</p>
+          </div>
+        </article>
+
+        <article class="case-tile" data-segment="corporativo">
+          <div class="media media--4x3" style="margin:calc(var(--card-padding) * -1) calc(var(--card-padding) * -1) 16px;width:calc(100% + 40px);"><span class="media__label">logo do cliente</span></div>
+          <div class="kicker">Desafio</div>
+          <p style="margin-bottom:12px;">[a preencher]</p>
+          <div class="kicker">Resultado</div>
+          <p>[número a preencher]</p>
+        </article>
+
+        <article class="case-tile" data-segment="individual">
+          <div class="media media--4x3" style="margin:calc(var(--card-padding) * -1) calc(var(--card-padding) * -1) 16px;width:calc(100% + 40px);"><span class="media__label">logo do cliente</span></div>
+          <div class="kicker">Desafio</div>
+          <p style="margin-bottom:12px;">[a preencher]</p>
+          <div class="kicker">Resultado</div>
+          <p>[número a preencher]</p>
+        </article>
+
+        <article class="case-tile" data-segment="corporativo">
+          <div class="media media--4x3" style="margin:calc(var(--card-padding) * -1) calc(var(--card-padding) * -1) 16px;width:calc(100% + 40px);"><span class="media__label">logo do cliente</span></div>
+          <div class="kicker">Desafio</div>
+          <p style="margin-bottom:12px;">[a preencher]</p>
+          <div class="kicker">Resultado</div>
+          <p>[número a preencher]</p>
+        </article>
+      </div>
+
+      <span class="confirm-flag" style="margin-top:24px;">CONFIRMAR: segmentação (Corporativo/Individual) e pesos do grid são estruturais — cada tile precisa do case real (cliente, desafio, solução, resultado, depoimento) para publicar.</span>
     </div>
   </section>
 
