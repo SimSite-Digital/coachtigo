@@ -1,0 +1,75 @@
+/* ==========================================================================
+   Coach'tigo — Design Tokens
+   Fonte: Manual de Marca oficial v1.0 (Edição 2026)
+   ========================================================================== */
+
+:root {
+  /* ---- Cor — paleta fixa, 5 cores + branco (proporção 60/25/10/5) ---- */
+  --color-green: #1F6B3A;          /* primária — títulos, botões, ícones, elementos de marca */
+  --color-green-hover: #1a5c31;    /* hover do botão primário, -12% luminosidade */
+  --color-white: #FFFFFF;          /* base — fundo padrão */
+  --color-navy: #16205A;           /* apoio institucional — logotipo, títulos, fundos escuros */
+  --color-gray-light: #EFF1EE;     /* fundos de seção, cards, tabelas, campos de formulário */
+  --color-gray-dark: #3F4644;      /* texto corrido, legendas, linhas de apoio */
+  --color-border: #E2E5E1;         /* borda padrão de card */
+  --color-error: #B0342C;          /* erro — restrito a interfaces */
+  --color-warning: #C2871A;        /* atenção — restrito a interfaces */
+  --color-symbol-green: #3AAA1E;   /* pertence só à arte do logotipo — nunca em texto/áreas grandes */
+
+  /* Sombra: navy a 7% e 5% de opacidade */
+  --shadow-navy-07: rgba(22, 32, 90, 0.07);
+  --shadow-navy-05: rgba(22, 32, 90, 0.05);
+  --overlay-navy-62: rgba(22, 32, 90, 0.62); /* overlay padrão texto sobre foto */
+
+  /* ---- Tipografia ---- */
+  --font-headline: 'Spectral', Georgia, 'Times New Roman', serif;
+  --font-body: 'IBM Plex Sans', Helvetica, Arial, sans-serif;
+  --font-mono: 'IBM Plex Mono', 'Courier New', monospace;
+
+  /* Hierarquia — desktop (reduzir 1 passo em telas < 640px via media query) */
+  /* H1 não usa token de tamanho fixo — ver clamp() direto no seletor h1 em base.css */
+  --text-h1-ls: -0.01em;
+  --text-h2-size: 40px;   --text-h2-lh: 46px;   --text-h2-ls: 0;
+  --text-h3-size: 22px;   --text-h3-lh: 30px;   --text-h3-ls: 0;
+  --text-kicker-size: 11px; --text-kicker-lh: 16px; --text-kicker-ls: 0.16em;
+  --text-body-size: 16px; --text-body-lh: 26px; --text-body-ls: 0;
+  --text-small-size: 13px; --text-small-lh: 21px; --text-small-ls: 0;
+  --text-ui-size: 12px;   --text-ui-lh: 16px;   --text-ui-ls: 0.04em;
+
+  /* ---- Espaçamento — múltiplos de 8px ---- */
+  --space-1: 8px;
+  --space-2: 16px;
+  --space-3: 24px;
+  --space-4: 32px;
+  --space-5: 40px;
+  --space-6: 48px;
+  --space-7: 56px;
+  --space-8: 64px;
+  --space-10: 80px;
+  --space-12: 96px;
+  --space-16: 128px;
+
+  /* ---- Componentes ---- */
+  --radius: 0;                     /* raio 0 em toda a interface, sem exceção */
+  --button-height: 44px;
+  --button-padding-y: 12px;
+  --button-padding-x: 22px;
+  --focus-ring: 2px solid var(--color-green);
+  --focus-ring-offset: 2px;
+  --card-padding: 20px;
+  --card-shadow: 0 1px 3px var(--shadow-navy-07), 0 8px 20px var(--shadow-navy-05);
+
+  /* ---- Layout ---- */
+  --container-max: 1200px;
+  --container-pad: var(--space-3);
+  --header-height: 80px;
+}
+
+@media (max-width: 640px) {
+  :root {
+    /* H1 é fluido via clamp() — já reduz sozinho, sem token de mobile */
+    --text-h2-size: 24px; --text-h2-lh: 30px;
+    --text-h3-size: 18px; --text-h3-lh: 24px;
+    --header-height: 64px;
+  }
+}
