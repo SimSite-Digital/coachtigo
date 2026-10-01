@@ -28,8 +28,8 @@
       });
     }
 
-    document.querySelectorAll('.card-grid, .card-grid--2, .card-grid--4, .stats-row, .timeline, .cases-gallery').forEach(function (group) {
-      var items = group.querySelectorAll(':scope > .card, :scope > .stat, :scope > .timeline__item, :scope > .case-tile');
+    document.querySelectorAll('.card-grid, .card-grid--2, .card-grid--4, .stats-row, .timeline, .cases-gallery, .principles, .why-split__grid').forEach(function (group) {
+      var items = group.querySelectorAll(':scope > .card, :scope > .service-card, :scope > .stat, :scope > .timeline__item, :scope > .case-tile, :scope > .principles__item, :scope > .why-split__item');
       revealGroup(Array.prototype.slice.call(items));
     });
 
@@ -104,28 +104,4 @@
     }
   });
 
-  /* ==================================================================== */
-  /* Card com tilt 3D — aproximação própria enquanto o componente real da  */
-  /* biblioteca SimSite (card-inclina-3d) não é enviado.                   */
-  /* Roda independente do GSAP. Desativado em touch e reduced-motion.      */
-  /* ==================================================================== */
-  var supportsFineHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-
-  if (supportsFineHover && !reduceMotion) {
-    var MAX_TILT_DEG = 6; // sóbrio — o manual não pede efeito "wow"
-
-    document.querySelectorAll('.card--tilt').forEach(function (card) {
-      card.addEventListener('mousemove', function (e) {
-        var rect = card.getBoundingClientRect();
-        var px = (e.clientX - rect.left) / rect.width;
-        var py = (e.clientY - rect.top) / rect.height;
-        var rotateY = (px - 0.5) * 2 * MAX_TILT_DEG;
-        var rotateX = (0.5 - py) * 2 * MAX_TILT_DEG;
-        card.style.transform = 'perspective(900px) rotateX(' + rotateX.toFixed(2) + 'deg) rotateY(' + rotateY.toFixed(2) + 'deg)';
-      });
-      card.addEventListener('mouseleave', function () {
-        card.style.transform = 'perspective(900px) rotateX(0deg) rotateY(0deg)';
-      });
-    });
-  }
 })();

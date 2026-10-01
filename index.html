@@ -84,6 +84,10 @@
         <li><a class="nav__link" href="contato.html">Contato</a></li>
       </ul>
       <a class="btn btn--primary nav__cta" href="contato.html">Falar com a Equipe</a>
+      <div class="nav__contact-mobile">
+        <a href="tel:+556530570100">(65) 3057-0100</a>
+        <a href="https://wa.me/5565999673687">(65) 99967-3687 · WhatsApp</a>
+      </div>
     </nav>
 
     <button class="nav__toggle" data-nav-toggle aria-label="Abrir menu" aria-expanded="false">
@@ -94,44 +98,48 @@
 
 <main id="conteudo">
 
-  <!-- ============ HERO — full-bleed, assimétrico ============ -->
-  <!-- CONFIRMAR: foto real do hero — placeholder /assets/img/hero/turma-treinamento-16x9.webp aguarda upload do cliente; até lá, .hero__bg cai no fallback sólido navy definido em components.css -->
-  <section class="hero" data-parallax-hero>
-    <div class="fundo-grade-movimento" data-density="24" aria-hidden="true"></div>
-    <div class="hero__bg" data-parallax-layer>
-      <img src="assets/img/demo-stock/hero-16x9-demo.webp" alt="Turma em treinamento corporativo (foto temporária de demonstração — Pexels)" width="1920" height="1280">
-    </div>
-    <div class="container hero__content">
-      <span class="badge">15 anos em Mato Grosso</span>
-      <h1 style="margin-top:16px;">Desenvolvimento que a equipe percebe no dia seguinte</h1>
+  <!-- ============ HERO — duas colunas, foto integrada (B8) ============ -->
+  <!-- CONFIRMAR: foto real do hero aguarda upload do cliente; até lá, .hero-split__media cai no fallback sólido navy definido em components.css -->
+  <section class="hero-split">
+    <div class="hero-split__text">
+      <span class="kicker">15 anos em Mato Grosso</span>
+      <h1>Desenvolvimento que a equipe percebe no dia seguinte</h1>
       <p class="lede">Diagnóstico, trilha e medição para líderes e times de empresas de todos os portes em Cuiabá e Várzea Grande.</p>
       <div class="hero__actions">
         <a href="contato.html" class="btn btn--primary">Falar com a Equipe</a>
-        <a href="servicos/index.html" class="btn btn--secondary-white">Programas</a>
+        <a href="servicos/index.html" class="btn btn--secondary-navy">Conhecer programas →</a>
       </div>
+    </div>
+    <div class="hero-split__media" data-parallax-hero>
+      <div class="fundo-grade-movimento" data-density="16" aria-hidden="true"></div>
+      <div data-parallax-layer style="position:absolute;inset:0;">
+        <img src="assets/img/demo-stock/hero-16x9-demo.webp" alt="Turma em treinamento corporativo (foto temporária de demonstração — Pexels)" width="1920" height="1280" style="width:100%;height:100%;object-fit:cover;">
+      </div>
+      <span class="hero-split__seam" aria-hidden="true"></span>
+      <span class="hero-split__badge">Cuiabá &amp; Várzea Grande</span>
     </div>
   </section>
 
-  <!-- ============ PROPOSTA DE VALOR ============ -->
-  <section class="section section--gap-lg">
+  <!-- ============ COMO TRABALHAMOS — lista numerada, não cards (B9) ============ -->
+  <section class="section">
     <div class="container">
-      <div class="section-head section-head--center">
+      <div class="section-head">
         <span class="kicker">Como trabalhamos</span>
         <h2>Três decisões que sustentam cada programa</h2>
       </div>
-      <div class="card-grid">
-        <div class="card">
-          <div class="card__icon"><svg><use href="assets/img/icons/sprite.svg#icon-diagnostico"></use></svg></div>
+      <div class="principles">
+        <div class="principles__item">
+          <span class="principles__num">01</span>
           <h3>Diagnóstico antes de agir</h3>
           <p>Entendemos o contexto real da equipe antes de propor qualquer programa.</p>
         </div>
-        <div class="card">
-          <div class="card__icon"><svg><use href="assets/img/icons/sprite.svg#icon-medicao"></use></svg></div>
+        <div class="principles__item">
+          <span class="principles__num">02</span>
           <h3>Métrica do início ao fim</h3>
           <p>Cada trilha tem indicador acompanhado, não promessa vaga.</p>
         </div>
-        <div class="card">
-          <div class="card__icon"><svg><use href="assets/img/icons/sprite.svg#icon-dualidade"></use></svg></div>
+        <div class="principles__item">
+          <span class="principles__num">03</span>
           <h3>Dois públicos, um método</h3>
           <p>Atendemos o desenvolvimento da liderança corporativa e a jornada individual de quem quer evoluir por conta própria.</p>
         </div>
@@ -139,47 +147,43 @@
     </div>
   </section>
 
-  <!-- ============ CLIENTES ============ -->
-  <section class="section section--gray section--gap-lg">
+  <!-- ============ EMPRESAS ATENDIDAS — mural estruturado (B10) ============ -->
+  <section class="section section--sm section--gray">
     <div class="container">
       <div class="section-head section-head--center">
         <span class="kicker">Quem já treinou com a gente</span>
         <h2>Mais de 70 empresas atendidas em Mato Grosso</h2>
       </div>
-      <div class="carousel" data-carousel>
-        <div class="carousel__track" data-carousel-track style="scroll-snap-type:none;">
-          <div class="logo-strip">
-            <span class="logo-strip__item">JBS</span>
-            <span class="logo-strip__item">SESI</span>
-            <span class="logo-strip__item">Chilli Beans</span>
-            <span class="logo-strip__item">Kroton</span>
-            <span class="logo-strip__item">Bom Futuro</span>
-            <span class="logo-strip__item">SENAI</span>
-            <span class="logo-strip__item">Unicred</span>
-            <span class="logo-strip__item">Sicredi</span>
-            <span class="logo-strip__item">SENAC</span>
-            <span class="logo-strip__item">SESC</span>
-            <span class="logo-strip__item">Pantanal Shopping</span>
-            <span class="logo-strip__item">TRT</span>
-            <span class="logo-strip__item">Fort Atacadista</span>
-            <span class="logo-strip__item">Sescoop</span>
-            <span class="logo-strip__item">UFMT</span>
-            <span class="logo-strip__item">FIEMT</span>
-            <span class="logo-strip__item">Grupo Petrópolis</span>
-            <span class="logo-strip__item">UNIC</span>
-            <span class="logo-strip__item">Governo de MT</span>
-            <span class="logo-strip__item">Herbalife</span>
-            <span class="logo-strip__item">Comper</span>
-            <span class="logo-strip__item">IFMT</span>
-          </div>
-        </div>
+      <div class="logo-wall">
+        <span class="logo-wall__item">JBS</span>
+        <span class="logo-wall__item">SESI</span>
+        <span class="logo-wall__item">Chilli Beans</span>
+        <span class="logo-wall__item">Kroton</span>
+        <span class="logo-wall__item">Bom Futuro</span>
+        <span class="logo-wall__item">SENAI</span>
+        <span class="logo-wall__item">Unicred</span>
+        <span class="logo-wall__item">Sicredi</span>
+        <span class="logo-wall__item">SENAC</span>
+        <span class="logo-wall__item">SESC</span>
+        <span class="logo-wall__item">Pantanal Shopping</span>
+        <span class="logo-wall__item">TRT</span>
+        <span class="logo-wall__item">Fort Atacadista</span>
+        <span class="logo-wall__item">Sescoop</span>
+        <span class="logo-wall__item">UFMT</span>
+        <span class="logo-wall__item">FIEMT</span>
+        <span class="logo-wall__item">Grupo Petrópolis</span>
+        <span class="logo-wall__item">UNIC</span>
+        <span class="logo-wall__item">Governo de MT</span>
+        <span class="logo-wall__item">Herbalife</span>
+        <span class="logo-wall__item">Comper</span>
+        <span class="logo-wall__item">IFMT</span>
       </div>
-      <!-- Lista completa de ~70 clientes disponível para o rodapé de propostas comerciais; aqui exibimos uma seleção representativa. -->
+      <p style="text-align:center;margin-top:var(--space-4);color:var(--color-gray-dark);">Empresas privadas, instituições de ensino e organizações públicas já passaram pelos programas da Coach'tigo.</p>
     </div>
   </section>
 
-  <!-- ============ SERVIÇOS ============ -->
-  <section class="section section--gap-lg">
+  <!-- ============ PROGRAMAS — ServiceCard, só o âncora com foto (B11) ============ -->
+  <section class="section">
     <div class="container">
       <div class="section-head section-head--center">
         <span class="kicker">Programas</span>
@@ -187,73 +191,73 @@
       </div>
       <div class="card-grid">
         <!-- CONFIRMAR: foto real deste card aguarda upload do cliente; .card__bg cai no fallback navy definido em components.css até lá -->
-        <div class="card card--featured card--tilt">
+        <a class="card card--featured" href="servicos/treinamentos-in-company.html" style="text-decoration:none;">
           <div class="card__bg"><img src="assets/img/demo-stock/card-in-company-16x9-demo.webp" alt="Equipe em treinamento (foto temporária de demonstração — Pexels)"></div>
           <div class="card--featured__body">
             <div class="card__icon"><svg><use href="assets/img/icons/sprite.svg#icon-in-company"></use></svg></div>
             <h3>Treinamentos In Company</h3>
             <p>Programas desenhados para o contexto real da sua equipe, com diagnóstico e indicador.</p>
-            <a class="btn--tertiary" href="servicos/treinamentos-in-company.html">Saber mais</a>
+            <span class="btn--tertiary service-card__arrow-wrap">Conhecer programa <span class="service-card__arrow"><svg style="width:16px;height:16px;"><use href="assets/img/icons/sprite.svg#icon-arrow-right"></use></svg></span></span>
           </div>
-        </div>
-        <div class="card card--tilt">
+        </a>
+        <a class="service-card" href="servicos/coaching-executivo.html">
           <div class="card__icon"><svg><use href="assets/img/icons/sprite.svg#icon-executivo"></use></svg></div>
           <h3>Coaching Executivo</h3>
           <p>Desenvolvimento individual para quem lidera pessoas e resultados.</p>
-          <a class="btn--tertiary" href="servicos/coaching-executivo.html">Saber mais</a>
-        </div>
-        <div class="card card--tilt">
+          <span class="btn--tertiary">Conhecer programa <span class="service-card__arrow"><svg style="width:16px;height:16px;"><use href="assets/img/icons/sprite.svg#icon-arrow-right"></use></svg></span></span>
+        </a>
+        <a class="service-card" href="servicos/coaching-individual.html">
           <div class="card__icon"><svg><use href="assets/img/icons/sprite.svg#icon-individual"></use></svg></div>
           <h3>Coaching Individual</h3>
           <p>Life Coaching, PNL e Hipnose para quem quer evoluir por conta própria.</p>
-          <a class="btn--tertiary" href="servicos/coaching-individual.html">Saber mais</a>
-        </div>
-        <div class="card card--tilt">
+          <span class="btn--tertiary">Conhecer programa <span class="service-card__arrow"><svg style="width:16px;height:16px;"><use href="assets/img/icons/sprite.svg#icon-arrow-right"></use></svg></span></span>
+        </a>
+        <a class="service-card" href="servicos/palestras.html">
           <div class="card__icon"><svg><use href="assets/img/icons/sprite.svg#icon-palestra"></use></svg></div>
           <h3>Palestras</h3>
           <p>Conteúdo aplicado para eventos, convenções e datas comemorativas.</p>
-          <a class="btn--tertiary" href="servicos/palestras.html">Saber mais</a>
-        </div>
-        <div class="card card--tilt">
+          <span class="btn--tertiary">Conhecer programa <span class="service-card__arrow"><svg style="width:16px;height:16px;"><use href="assets/img/icons/sprite.svg#icon-arrow-right"></use></svg></span></span>
+        </a>
+        <a class="service-card" href="servicos/workshops-diagnosticos.html">
           <div class="card__icon"><svg><use href="assets/img/icons/sprite.svg#icon-workshop"></use></svg></div>
           <h3>Workshops &amp; Diagnósticos</h3>
           <p>Mapeamento comportamental e organizacional para embasar decisões.</p>
-          <a class="btn--tertiary" href="servicos/workshops-diagnosticos.html">Saber mais</a>
-        </div>
-        <div class="card card--tilt">
+          <span class="btn--tertiary">Conhecer programa <span class="service-card__arrow"><svg style="width:16px;height:16px;"><use href="assets/img/icons/sprite.svg#icon-arrow-right"></use></svg></span></span>
+        </a>
+        <a class="service-card" href="servicos/formacoes.html">
           <div class="card__icon"><svg><use href="assets/img/icons/sprite.svg#icon-formacao"></use></svg></div>
           <h3>Formações Especializadas</h3>
           <p>PNL, Hipnose e Líder Coach — formação de novos facilitadores.</p>
-          <a class="btn--tertiary" href="servicos/formacoes.html">Saber mais</a>
-        </div>
+          <span class="btn--tertiary">Conhecer programa <span class="service-card__arrow"><svg style="width:16px;height:16px;"><use href="assets/img/icons/sprite.svg#icon-arrow-right"></use></svg></span></span>
+        </a>
       </div>
     </div>
   </section>
 
-  <!-- ============ POR QUE A COACH'TIGO ============ -->
+  <!-- ============ POR QUE A COACH'TIGO — texto + grid 2x2 (B12) ============ -->
   <section class="section section--gray">
-    <div class="container">
-      <div class="section-head section-head--center">
+    <div class="container why-split">
+      <div class="section-head" style="margin-bottom:0;">
         <span class="kicker">Por que a Coach'tigo</span>
         <h2>O que sustenta o resultado depois que o treinamento acaba</h2>
       </div>
-      <div class="card-grid--4" style="display:grid;gap:24px;">
-        <div class="card">
+      <div class="why-split__grid">
+        <div class="why-split__item">
           <div class="card__icon"><svg><use href="assets/img/icons/sprite.svg#icon-metodologia"></use></svg></div>
           <h3>Metodologia própria</h3>
           <p>Testada em 15 anos de mercado em Mato Grosso.</p>
         </div>
-        <div class="card">
+        <div class="why-split__item">
           <div class="card__icon"><svg><use href="assets/img/icons/sprite.svg#icon-aplicacao"></use></svg></div>
           <h3>Times que aplicam</h3>
           <p>Ferramentas praticadas em turma, não só apresentadas.</p>
         </div>
-        <div class="card">
+        <div class="why-split__item">
           <div class="card__icon"><svg><use href="assets/img/icons/sprite.svg#icon-local"></use></svg></div>
           <h3>Presença consolidada</h3>
           <p>Atuação contínua em Cuiabá e Várzea Grande.</p>
         </div>
-        <div class="card">
+        <div class="why-split__item">
           <div class="card__icon"><svg><use href="assets/img/icons/sprite.svg#icon-acompanhamento"></use></svg></div>
           <h3>Acompanhamento pós-treinamento</h3>
           <p>Medição de indicador depois que a turma termina.</p>
@@ -279,37 +283,42 @@
     </div>
   </section>
 
-  <!-- ============ DEPOIMENTOS ============ -->
-  <section class="section section--gray">
+  <!-- ============ DEPOIMENTOS — aspas grandes, 1 por vez (B14) ============ -->
+  <section class="section">
     <div class="container">
-      <div class="section-head">
+      <div class="section-head section-head--center">
         <span class="kicker">Depoimentos</span>
         <h2>Quem já passou pelo método</h2>
       </div>
       <div class="carousel" data-carousel>
         <div class="carousel__track" data-carousel-track>
           <div class="testimonial">
-            <p>"Eu tinha o poder dentro de mim. Depois que fiz o LSC — Life &amp; Self Coaching — descobri como usar as ferramentas que há em mim."</p>
+            <span class="testimonial__mark" aria-hidden="true">"</span>
+            <p>Eu tinha o poder dentro de mim. Depois que fiz o LSC — Life &amp; Self Coaching — descobri como usar as ferramentas que há em mim.</p>
             <div class="testimonial__author">Auricarla Carpes Carvalho</div>
             <div class="testimonial__role">Analista de crédito</div>
           </div>
           <div class="testimonial">
-            <p>"O desafio de parar de gastar sem necessidade me fez entrar num mundo de dívidas. O LSC foi o investimento mais barato em termos financeiros e o maior em termos de valorização pessoal."</p>
+            <span class="testimonial__mark" aria-hidden="true">"</span>
+            <p>O desafio de parar de gastar sem necessidade me fez entrar num mundo de dívidas. O LSC foi o investimento mais barato em termos financeiros e o maior em termos de valorização pessoal.</p>
             <div class="testimonial__author">Ivanete Machado</div>
             <div class="testimonial__role">Gerente comercial</div>
           </div>
           <div class="testimonial">
-            <p>"Desde que saí do curso, tive certeza que havia participado de uma das mais gratificantes experiências da minha vida."</p>
+            <span class="testimonial__mark" aria-hidden="true">"</span>
+            <p>Desde que saí do curso, tive certeza que havia participado de uma das mais gratificantes experiências da minha vida.</p>
             <div class="testimonial__author">Luiz Carmagos</div>
             <div class="testimonial__role">Auditor TCE</div>
           </div>
           <div class="testimonial">
-            <p>"Não tinha a ideia de como meus medos me impossibilitavam de tomar decisões. Hoje sou uma outra pessoa, muito diferente e melhor."</p>
+            <span class="testimonial__mark" aria-hidden="true">"</span>
+            <p>Não tinha a ideia de como meus medos me impossibilitavam de tomar decisões. Hoje sou uma outra pessoa, muito diferente e melhor.</p>
             <div class="testimonial__author">Rafaela Mamedes</div>
             <div class="testimonial__role">Relacionamento e vendas</div>
           </div>
           <div class="testimonial">
-            <p>"Fiz o curso junto com a minha família. Incrível como as coisas mudaram em casa — mudanças positivas, melhores, para o bem."</p>
+            <span class="testimonial__mark" aria-hidden="true">"</span>
+            <p>Fiz o curso junto com a minha família. Incrível como as coisas mudaram em casa — mudanças positivas, melhores, para o bem.</p>
             <div class="testimonial__author">Rafael Lisco</div>
             <div class="testimonial__role">Estudante</div>
           </div>
@@ -325,8 +334,9 @@
   <!-- ============ CASES DE SUCESSO ============ -->
   <!-- CONFIRMAR: seção suprimida da Home até termos ao menos 3 cases reais documentados (desafio/solução/resultado/depoimento). Página /cases.html já está construída (noindex) e pronta para publicar assim que o conteúdo chegar. -->
 
-  <!-- ============ BLOG ============ -->
-  <section class="section">
+  <!-- ============ BLOG — categoria + CTA consistente (B15) ============ -->
+  <!-- CONFIRMAR (A9.6): links abaixo levam a posts ainda não publicados no WordPress (/blog/) — ver nota desta rodada sobre URLs do blog -->
+  <section class="section section--gray">
     <div class="container">
       <div class="section-head section-head--center">
         <span class="kicker">Blog</span>
@@ -335,49 +345,64 @@
       <div class="card-grid">
         <a class="card" href="/blog/como-estruturar-diagnostico-de-equipe/" style="display:block;">
           <div class="media media--4x3" style="margin:-20px -20px 16px;width:calc(100% + 40px);"><img src="assets/img/demo-stock/blog-4x3-demo-1.webp" alt="Reunião de diagnóstico de equipe (foto temporária de demonstração — Pexels)" style="width:100%;height:100%;object-fit:cover;"></div>
+          <span class="blog-card__category">Diagnóstico</span>
           <h3>Como estruturar um diagnóstico de equipe antes do treinamento</h3>
           <p>Três perguntas para fazer ao RH antes de propor qualquer programa.</p>
+          <span class="btn--tertiary">Ler artigo <span class="service-card__arrow"><svg style="width:16px;height:16px;"><use href="assets/img/icons/sprite.svg#icon-arrow-right"></use></svg></span></span>
         </a>
         <a class="card" href="/blog/feedback-como-rotina/" style="display:block;">
           <div class="media media--4x3" style="margin:-20px -20px 16px;width:calc(100% + 40px);"><img src="assets/img/demo-stock/blog-4x3-demo-2.webp" alt="Conversa de feedback entre colegas (foto temporária de demonstração — Pexels)" style="width:100%;height:100%;object-fit:cover;"></div>
+          <span class="blog-card__category">Liderança</span>
           <h3>Feedback como rotina: três práticas para o dia a dia</h3>
           <p>O que muda quando a conversa de desempenho vira hábito semanal.</p>
+          <span class="btn--tertiary">Ler artigo <span class="service-card__arrow"><svg style="width:16px;height:16px;"><use href="assets/img/icons/sprite.svg#icon-arrow-right"></use></svg></span></span>
         </a>
         <a class="card" href="/blog/pnl-aplicada-a-vendas/" style="display:block;">
           <div class="media media--4x3" style="margin:-20px -20px 16px;width:calc(100% + 40px);"><img src="assets/img/demo-stock/blog-4x3-demo-3.webp" alt="Treinamento de vendas em sala (foto temporária de demonstração — Pexels)" style="width:100%;height:100%;object-fit:cover;"></div>
+          <span class="blog-card__category">Vendas</span>
           <h3>PNL aplicada a vendas: por onde começar</h3>
           <p>Três técnicas simples para times comerciais usarem ainda essa semana.</p>
+          <span class="btn--tertiary">Ler artigo <span class="service-card__arrow"><svg style="width:16px;height:16px;"><use href="assets/img/icons/sprite.svg#icon-arrow-right"></use></svg></span></span>
         </a>
       </div>
-    </div>
-  </section>
-
-  <!-- ============ CTA PRINCIPAL ============ -->
-  <section class="section section--navy" style="position:relative;overflow:hidden;">
-    <div class="fundo-grade-movimento" data-density="18" aria-hidden="true"></div>
-    <div class="container" style="position:relative;z-index:1;max-width:640px;text-align:center;">
-      <h2>Comece pelo diagnóstico. Ele leva duas semanas e não interrompe a rotina.</h2>
-      <div class="hero__actions" style="justify-content:center;margin-top:24px;">
-        <a href="contato.html" class="btn btn--primary">Quero um diagnóstico</a>
+      <div style="text-align:center;margin-top:var(--space-5);">
+        <a href="/blog/" class="btn btn--secondary-navy">Ver todos os conteúdos →</a>
       </div>
     </div>
   </section>
 
-  <!-- ============ NEWSLETTER ============ -->
-  <section class="section">
-    <div class="container" style="max-width:560px;text-align:center;">
-      <span class="kicker">Newsletter</span>
-      <h2 style="margin-top:8px;">Um e-mail por mês, sem promessa vazia</h2>
-      <p style="margin-top:8px;color:var(--color-gray-dark);">Conteúdo prático sobre liderança e desenvolvimento humano, direto na sua caixa de entrada.</p>
-      <form data-lead-form action="assets/php/enviar.php" style="display:flex;gap:12px;margin-top:24px;flex-wrap:wrap;justify-content:center;">
-        <input type="hidden" name="tipo" value="newsletter">
-        <div class="field" style="flex:1;min-width:220px;margin-bottom:0;">
-          <label class="visually-hidden" for="newsletter-email">E-mail</label>
-          <input id="newsletter-email" type="email" name="email" placeholder="seu@email.com" required>
-        </div>
-        <button type="submit" class="btn btn--primary">Quero receber</button>
-      </form>
-      <div class="form-status" data-form-status role="status"></div>
+  <!-- ============ CTA PRINCIPAL (B16) ============ -->
+  <section class="section section--sm section--navy" style="position:relative;overflow:hidden;">
+    <div class="fundo-grade-movimento" data-density="18" aria-hidden="true"></div>
+    <div class="container" style="position:relative;z-index:1;max-width:640px;text-align:center;">
+      <span class="kicker" style="color:var(--color-white);opacity:.8;">Próximo passo</span>
+      <h2 style="margin-top:var(--space-2);">Comece pelo diagnóstico.</h2>
+      <p style="margin-top:var(--space-2);color:rgba(255,255,255,.75);">Ele leva duas semanas e não interrompe a rotina da sua equipe.</p>
+      <div class="hero__actions" style="justify-content:center;margin-top:var(--space-4);">
+        <a href="contato.html" class="btn btn--primary">Quero conversar sobre minha equipe</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ NEWSLETTER — horizontal compacta (B17) ============ -->
+  <section class="section--sm">
+    <div class="container newsletter-split">
+      <div>
+        <span class="kicker">Newsletter</span>
+        <h3 style="margin-top:8px;">Um e-mail por mês, sem promessa vazia</h3>
+        <p style="margin-top:4px;color:var(--color-gray-dark);">Conteúdo prático sobre liderança e desenvolvimento humano.</p>
+      </div>
+      <div>
+        <form data-lead-form action="assets/php/enviar.php">
+          <input type="hidden" name="tipo" value="newsletter">
+          <div class="field" style="margin-bottom:0;">
+            <label class="visually-hidden" for="newsletter-email">E-mail</label>
+            <input id="newsletter-email" type="email" name="email" placeholder="seu@email.com" required style="min-width:240px;">
+          </div>
+          <button type="submit" class="btn btn--primary">Quero receber</button>
+        </form>
+        <div class="form-status" data-form-status role="status"></div>
+      </div>
     </div>
   </section>
 

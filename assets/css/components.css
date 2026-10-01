@@ -214,7 +214,20 @@
   }
   .nav[data-mobile-open="true"] .nav__dropdown[data-open="true"] .nav__dropdown-menu { display: block; }
   .nav[data-mobile-open="true"] .nav__cta { display: flex; margin-top: var(--space-3); }
+  .nav[data-mobile-open="true"] .nav__contact-mobile { display: flex; }
 }
+.nav__contact-mobile {
+  display: none;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: var(--space-2);
+  padding-top: var(--space-2);
+  border-top: 1px solid var(--color-border);
+  font-family: var(--font-mono);
+  font-size: 13px;
+}
+.nav__contact-mobile a { color: var(--color-gray-dark); }
+.nav__contact-mobile a:hover { color: var(--color-green); }
 
 /* ---------------------------------------------------------------------- */
 /* Breadcrumbs                                                              */
@@ -508,17 +521,6 @@
 }
 
 /* ---------------------------------------------------------------------- */
-/* Card com tilt 3D — aproximação própria (componente real da biblioteca   */
-/* SimSite ainda não enviado). Rotação leve controlada via JS em motion.js,*/
-/* desativada em touch e com prefers-reduced-motion (ver motion.js).       */
-/* ---------------------------------------------------------------------- */
-.card--tilt {
-  transform-style: preserve-3d;
-  transition: transform .5s var(--ease-out);
-  will-change: transform;
-}
-
-/* ---------------------------------------------------------------------- */
 /* Timeline / processo                                                     */
 /* ---------------------------------------------------------------------- */
 .timeline {
@@ -645,7 +647,7 @@
 /* Footer                                                                   */
 /* ---------------------------------------------------------------------- */
 .site-footer__top {
-  padding-block: var(--space-6);
+  padding-block: var(--space-9);
   border-top: 1px solid var(--color-border);
 }
 .site-footer__grid {
@@ -827,6 +829,162 @@
   .cases-gallery { grid-template-columns: 1fr; }
   .case-tile, .case-tile--lg { grid-column: span 1; }
 }
+
+/* ==========================================================================
+   Home — redesenho editorial (briefing B8–B17)
+   ========================================================================== */
+
+/* ---- B8: Hero em duas colunas, foto integrada (não "retângulo colado") -- */
+.hero-split {
+  display: grid;
+  grid-template-columns: minmax(340px, 460px) 1fr;
+  min-height: 86vh;
+  align-items: stretch;
+}
+.hero-split__text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--space-3);
+  padding: var(--space-8) var(--space-4);
+  padding-left: max(24px, calc((100vw - var(--container-max)) / 2 + 24px));
+}
+.hero-split__text .lede { font-size: 18px; line-height: 1.6; color: var(--color-gray-dark); max-width: 42ch; }
+.hero-split__media {
+  position: relative;
+  overflow: hidden;
+  background: var(--color-navy);
+  min-height: 360px;
+}
+.hero-split__media img { width: 100%; height: 100%; object-fit: cover; }
+/* Detalhe gráfico da identidade na costura entre as colunas — integra as duas
+   metades sem usar borda arredondada (regra do manual: raio 0) */
+.hero-split__seam {
+  position: absolute;
+  top: 0; bottom: 0; left: 0;
+  width: 4px;
+  background: var(--color-green);
+}
+.hero-split__badge {
+  position: absolute;
+  left: -1px;
+  bottom: var(--space-4);
+  background: var(--color-white);
+  border-left: 4px solid var(--color-green);
+  padding: 10px 18px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--color-navy);
+}
+@media (max-width: 900px) {
+  .hero-split { grid-template-columns: 1fr; min-height: auto; }
+  .hero-split__text { padding: var(--space-6) var(--space-3) var(--space-4); }
+  .hero-split__media { min-height: 320px; order: -1; }
+}
+
+/* ---- B9: "Como trabalhamos" — lista editorial numerada, não cards ------- */
+.principles {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-5);
+}
+@media (max-width: 900px) { .principles { grid-template-columns: 1fr; gap: var(--space-4); } }
+.principles__item {
+  border-top: 1px solid var(--color-border);
+  padding-top: var(--space-3);
+}
+.principles__num {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: .08em;
+  color: var(--color-green);
+  margin-bottom: var(--space-2);
+}
+
+/* ---- B10: Mural de empresas — grade estruturada, não flex livre -------- */
+.logo-wall {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: var(--space-4) var(--space-3);
+  align-items: center;
+  justify-items: center;
+}
+@media (max-width: 900px) { .logo-wall { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 640px) { .logo-wall { grid-template-columns: repeat(2, 1fr); } }
+.logo-wall__item {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--color-gray-dark);
+  opacity: .65;
+  text-align: center;
+}
+
+/* ---- B11: ServiceCard — hover contido (sem tilt, sem zoom agressivo) --- */
+.service-card {
+  display: block;
+  padding: var(--card-padding);
+  border: 1px solid var(--color-border);
+  transition: background-color .25s ease, border-color .25s ease;
+}
+.service-card:hover { background: var(--color-gray-light); border-color: var(--color-green); }
+.service-card h3 { margin-bottom: var(--space-1); }
+.service-card p { margin-bottom: var(--space-2); }
+.service-card__arrow { display: inline-flex; vertical-align: middle; margin-left: 4px; transition: transform .25s ease; }
+.service-card:hover .service-card__arrow,
+.card--featured:hover .service-card__arrow { transform: translateX(4px); }
+
+/* ---- B12: "Por que a Coach'tigo" — texto 40% + grid 2x2 60% ------------ */
+.why-split {
+  display: grid;
+  grid-template-columns: 0.8fr 1.2fr;
+  gap: var(--space-6);
+  align-items: start;
+}
+@media (max-width: 900px) { .why-split { grid-template-columns: 1fr; } }
+.why-split__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-4);
+}
+@media (max-width: 640px) { .why-split__grid { grid-template-columns: 1fr; } }
+.why-split__item { border-top: 1px solid var(--color-border); padding-top: var(--space-2); }
+
+/* ---- B14: Depoimento — aspas grandes como elemento gráfico ------------- */
+.testimonial__mark {
+  font-family: var(--font-headline);
+  font-size: 96px;
+  line-height: .5;
+  color: var(--color-border);
+  margin-bottom: var(--space-2);
+  display: block;
+}
+
+/* ---- B15: BlogCard — categoria + CTA consistente ----------------------- */
+.blog-card__category {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--color-green);
+  display: block;
+  margin-bottom: 8px;
+}
+
+/* ---- B17: Newsletter — horizontal compacta (título+texto | campo+botão) */
+.newsletter-split {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: var(--space-5);
+  align-items: center;
+}
+@media (max-width: 760px) { .newsletter-split { grid-template-columns: 1fr; } }
+.newsletter-split form { display: flex; gap: 12px; }
+@media (max-width: 420px) { .newsletter-split form { flex-direction: column; } }
 
 .confirm-flag {
   display: inline-block;

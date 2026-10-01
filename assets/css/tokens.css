@@ -26,13 +26,12 @@
   --font-body: 'IBM Plex Sans', Helvetica, Arial, sans-serif;
   --font-mono: 'IBM Plex Mono', 'Courier New', monospace;
 
-  /* Hierarquia — desktop (reduzir 1 passo em telas < 640px via media query) */
-  /* H1 não usa token de tamanho fixo — ver clamp() direto no seletor h1 em base.css */
+  /* Hierarquia — desktop (H1/H2/H3 são fluidos via clamp(), ver base.css).
+     Faixas-alvo do briefing: H1 52-68px desktop / 36-44px mobile,
+     H2 38-48px, H3 22-28px, corpo 17-19px. */
   --text-h1-ls: -0.01em;
-  --text-h2-size: 40px;   --text-h2-lh: 46px;   --text-h2-ls: 0;
-  --text-h3-size: 22px;   --text-h3-lh: 30px;   --text-h3-ls: 0;
   --text-kicker-size: 11px; --text-kicker-lh: 16px; --text-kicker-ls: 0.16em;
-  --text-body-size: 16px; --text-body-lh: 26px; --text-body-ls: 0;
+  --text-body-size: 17px; --text-body-lh: 28px; --text-body-ls: 0;
   --text-small-size: 13px; --text-small-lh: 21px; --text-small-ls: 0;
   --text-ui-size: 12px;   --text-ui-lh: 16px;   --text-ui-ls: 0.04em;
 
@@ -45,9 +44,17 @@
   --space-6: 48px;
   --space-7: 56px;
   --space-8: 64px;
+  --space-9: 72px;
   --space-10: 80px;
   --space-12: 96px;
+  --space-13: 104px;
   --space-16: 128px;
+
+  /* Respiro entre seções (briefing B3): principais 96-120px desktop,
+     56-72px mobile · menores 72-96px desktop */
+  --section-gap: var(--space-13);         /* 104px — seções principais */
+  --section-gap-sm: var(--space-10);      /* 80px — seções menores */
+  --section-gap-mobile: var(--space-8);   /* 64px */
 
   /* ---- Componentes ---- */
   --radius: 0;                     /* raio 0 em toda a interface, sem exceção */
@@ -70,9 +77,7 @@
 
 @media (max-width: 640px) {
   :root {
-    /* H1 é fluido via clamp() — já reduz sozinho, sem token de mobile */
-    --text-h2-size: 24px; --text-h2-lh: 30px;
-    --text-h3-size: 18px; --text-h3-lh: 24px;
+    /* H1/H2/H3 são fluidos via clamp() — já reduzem sozinhos, sem token de mobile */
     --header-height: 64px;
   }
 }

@@ -41,23 +41,26 @@ h1, h2 {
   color: var(--color-navy);
 }
 
+/* Escala fluida — faixas do briefing B4: H1 52-68/36-44, H2 38-48, H3 22-28 */
 h1 {
-  font-size: clamp(40px, 6vw, 76px);
-  line-height: 1.05;
+  font-size: clamp(36px, 4vw + 20px, 68px);
+  line-height: 1.08;
   letter-spacing: var(--text-h1-ls);
+  text-wrap: balance;
 }
 
 h2 {
-  font-size: var(--text-h2-size);
-  line-height: var(--text-h2-lh);
-  letter-spacing: var(--text-h2-ls);
+  font-size: clamp(28px, 4vw, 48px);
+  line-height: 1.15;
+  letter-spacing: 0;
+  text-wrap: balance;
 }
 
 h3 {
   font-family: var(--font-body);
   font-weight: 600;
-  font-size: var(--text-h3-size);
-  line-height: var(--text-h3-lh);
+  font-size: clamp(20px, 2vw, 28px);
+  line-height: 1.3;
   color: var(--color-navy);
 }
 
@@ -96,11 +99,12 @@ select:focus-visible,
 }
 
 .section {
-  padding-block: var(--space-10);
+  padding-block: var(--section-gap);
 }
+.section--sm { padding-block: var(--section-gap-sm); }
 
 @media (max-width: 640px) {
-  .section { padding-block: var(--space-6); }
+  .section, .section--sm { padding-block: var(--section-gap-mobile); }
 }
 
 .section--gray { background: var(--color-gray-light); }
