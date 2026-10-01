@@ -714,38 +714,9 @@
 }
 
 /* ---------------------------------------------------------------------- */
-/* Hero                                                                     */
+/* .hero__grid — grid genérico 2 colunas usado em sobre.html, contato.html  */
+/* e nas páginas de serviço (não é o hero da Home — ver .hero mais abaixo)  */
 /* ---------------------------------------------------------------------- */
-.hero {
-  position: relative;
-  min-height: 88vh;
-  display: flex;
-  align-items: flex-end;
-  padding-block: var(--space-10);
-  overflow: hidden;
-}
-.hero__bg {
-  position: absolute;
-  inset: 0;
-  z-index: -2;
-  background: var(--color-navy); /* fallback sólido enquanto a foto real não chega — ver CONFIRMAR no index.html */
-}
-.hero__bg img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-.hero__bg::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(22,32,90,.15) 0%, rgba(22,32,90,.78) 100%);
-}
-.hero__content { max-width: 620px; position: relative; z-index: 1; }
-.hero__content .badge { border-color: var(--color-white); color: var(--color-white); }
-.hero__content h1 { color: var(--color-white); }
-
-/* .hero__grid segue em uso como grid genérico 2 colunas em sobre.html, contato.html e nas páginas de serviço — não é exclusivo do hero da Home */
 .hero__grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -754,10 +725,8 @@
 }
 @media (max-width: 900px) {
   .hero__grid { grid-template-columns: 1fr; }
-  .hero { min-height: auto; padding-block: var(--space-8); }
 }
 .hero__actions { display: flex; gap: var(--space-2); flex-wrap: wrap; margin-top: var(--space-3); }
-.hero p.lede { font-size: 18px; line-height: 1.6; color: var(--color-gray-light); margin-top: var(--space-2); max-width: 46ch; }
 
 /* ---------------------------------------------------------------------- */
 /* Page header (páginas internas)                                          */
@@ -838,62 +807,66 @@
    Home — redesenho editorial (briefing B8–B17)
    ========================================================================== */
 
-/* ---- B8: Hero em duas colunas, foto integrada (não "retângulo colado") -- */
-.hero-split {
-  display: grid;
-  grid-template-columns: minmax(380px, 45%) 1fr;
+/* ---- B8 revisado (patch 03): hero full-bleed, texto sobreposto a 45% ----
+   Substitui o hero de duas colunas (hero-split) da rodada anterior — aquele
+   layout tinha risco real de estouro de texto numa coluna estreita; esta
+   versão resolve com gradiente horizontal (escuro onde o texto fica, foto
+   visível à direita) em vez de um overlay uniforme que apagaria a foto. */
+.hero {
+  position: relative;
   min-height: 90vh;
-  align-items: stretch;
-}
-.hero-split__text {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: var(--space-3);
-  padding: var(--space-8) var(--space-4);
-  padding-left: max(24px, calc((100vw - var(--container-max)) / 2 + 24px));
-  max-width: 44ch; /* não deixa o texto esticar nem espremer contra a foto */
+  align-items: center;
+  overflow: hidden;
 }
-/* H1 do hero é mais contido que o H1 global — a coluna é só 45% da tela;
-   76px/68px (escala global) não cabe aqui mesmo em telas largas (testado em
-   1366/1920px) */
-.hero-split__text h1 {
+.hero__bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: var(--color-navy); /* fallback sólido enquanto a foto real não chega */
+}
+.hero__bg img { width: 100%; height: 100%; object-fit: cover; }
+.hero__bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(22, 32, 90, .93) 0%,
+    rgba(22, 32, 90, .80) 38%,
+    rgba(22, 32, 90, .25) 62%,
+    transparent 85%
+  );
+}
+.hero__content {
+  position: relative;
+  z-index: 1;
+  max-width: 45%;
+  color: var(--color-white);
+}
+/* Limite de fonte específico do hero — herdado do ajuste testado na rodada
+   anterior: em 45% de largura o H1 global (até 68px) ainda estoura em telas
+   comuns (testado em 1366/1920px); este teto evita o mesmo bug reaparecer. */
+.hero__content h1 {
   font-size: clamp(32px, 3.4vw + 14px, 56px);
   line-height: 1.1;
+  color: var(--color-white);
 }
-.hero-split__text .lede { font-size: 18px; line-height: 1.6; color: var(--color-gray-dark); max-width: 42ch; }
-.hero-split__media {
-  position: relative;
-  overflow: hidden;
-  background: var(--color-navy);
-  min-height: 360px;
-}
-.hero-split__media img { width: 100%; height: 100%; object-fit: cover; }
-/* Detalhe gráfico da identidade na costura entre as colunas — integra as duas
-   metades sem usar borda arredondada (regra do manual: raio 0) */
-.hero-split__seam {
-  position: absolute;
-  top: 0; bottom: 0; left: 0;
-  width: 4px;
-  background: var(--color-green);
-}
-.hero-split__badge {
-  position: absolute;
-  left: -1px;
-  bottom: var(--space-4);
-  background: var(--color-white);
-  border-left: 4px solid var(--color-green);
-  padding: 10px 18px;
-  font-family: var(--font-mono);
-  font-size: 12px;
-  letter-spacing: .1em;
-  text-transform: uppercase;
-  color: var(--color-navy);
-}
-@media (max-width: 900px) {
-  .hero-split { grid-template-columns: 1fr; min-height: auto; }
-  .hero-split__text { padding: var(--space-6) var(--space-3) var(--space-4); }
-  .hero-split__media { min-height: 320px; order: -1; }
+.hero__content .badge { border-color: var(--color-white); color: var(--color-white); }
+.hero__content .lede { font-size: 18px; line-height: 1.6; color: var(--color-gray-light); max-width: 42ch; }
+
+@media (max-width: 768px) {
+  .hero { min-height: 80vh; align-items: flex-end; padding-bottom: var(--space-6); }
+  .hero__content { max-width: 100%; }
+  .hero__bg::after {
+    background: linear-gradient(
+      0deg,
+      rgba(22, 32, 90, .93) 0%,
+      rgba(22, 32, 90, .75) 45%,
+      rgba(22, 32, 90, .15) 75%,
+      transparent 100%
+    );
+  }
 }
 
 /* ---- B9: "Como trabalhamos" — lista editorial numerada, não cards ------- */

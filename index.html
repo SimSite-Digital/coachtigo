@@ -98,25 +98,23 @@
 
 <main id="conteudo">
 
-  <!-- ============ HERO — duas colunas, foto integrada (B8) ============ -->
-  <!-- CONFIRMAR: foto real do hero aguarda upload do cliente; até lá, .hero-split__media cai no fallback sólido navy definido em components.css -->
-  <section class="hero-split">
-    <div class="hero-split__text">
-      <span class="kicker">15 anos em Mato Grosso</span>
-      <h1>Desenvolvimento que a equipe percebe no dia seguinte</h1>
-      <p class="lede">Diagnóstico, trilha e medição para líderes e times de empresas de todos os portes em Cuiabá e Várzea Grande.</p>
-      <div class="hero__actions">
-        <a href="contato.html" class="btn btn--primary">Falar com a Equipe</a>
-        <a href="servicos/index.html" class="btn btn--secondary-navy">Conhecer programas →</a>
-      </div>
-    </div>
-    <div class="hero-split__media" data-parallax-hero>
+  <!-- ============ HERO — foto full-bleed, texto sobreposto a 45% (patch 03, prioridade sobre patch 02 item 1) ============ -->
+  <!-- CONFIRMAR: foto real do hero — placeholder aguarda upload do cliente; até lá, .hero__bg cai no fallback sólido navy definido em components.css -->
+  <section class="hero" data-parallax-hero>
+    <div class="hero__bg" data-parallax-layer>
       <div class="fundo-grade-movimento" data-density="16" aria-hidden="true"></div>
-      <div data-parallax-layer style="position:absolute;inset:0;">
-        <img src="assets/img/demo-stock/hero-16x9-demo.webp" alt="Turma em treinamento corporativo (foto temporária de demonstração — Pexels)" width="1920" height="1280" style="width:100%;height:100%;object-fit:cover;">
+      <img src="assets/img/demo-stock/hero-16x9-demo.webp" alt="Turma em treinamento corporativo (foto temporária de demonstração — Pexels)" width="1920" height="1280">
+    </div>
+    <div class="container">
+      <div class="hero__content">
+        <span class="badge">15 anos em Mato Grosso</span>
+        <h1>Desenvolvimento que a equipe percebe no dia seguinte</h1>
+        <p class="lede">Diagnóstico, trilha e medição para líderes e times de empresas de todos os portes em Cuiabá e Várzea Grande.</p>
+        <div class="hero__actions">
+          <a href="contato.html" class="btn btn--primary">Falar com a Equipe</a>
+          <a href="servicos/index.html" class="btn btn--secondary-white">Conhecer programas →</a>
+        </div>
       </div>
-      <span class="hero-split__seam" aria-hidden="true"></span>
-      <span class="hero-split__badge">Cuiabá &amp; Várzea Grande</span>
     </div>
   </section>
 
