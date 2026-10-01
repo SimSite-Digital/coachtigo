@@ -28,7 +28,7 @@
       });
     }
 
-    document.querySelectorAll('.card-grid, .card-grid--2, .card-grid--4, .stats-row, .timeline, .cases-gallery, .principles, .why-split__grid').forEach(function (group) {
+    document.querySelectorAll('.card-grid, .card-grid--2, .card-grid--4, .stats-row, .timeline, .cases-gallery, .principles, .why-split__grid, .services__featured-row, .services__grid-row2').forEach(function (group) {
       var items = group.querySelectorAll(':scope > .card, :scope > .service-card, :scope > .stat, :scope > .timeline__item, :scope > .case-tile, :scope > .principles__item, :scope > .why-split__item');
       revealGroup(Array.prototype.slice.call(items));
     });
