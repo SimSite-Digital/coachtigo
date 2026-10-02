@@ -98,16 +98,21 @@
 
 <main id="conteudo">
 
-  <!-- ============ HERO — duas colunas, foto sangrando a borda direita (patch 04, substitui o full-bleed do patch 03) ============ -->
-  <!-- CONFIRMAR: foto real do hero aguarda upload do cliente; até lá, .hero__media cai no fallback sólido navy definido em components.css -->
+  <!-- ============ HERO — foto de fundo full-bleed com degradê, texto sobreposto (patch 07, substitui as duas colunas do patch 04) ============ -->
   <section class="hero">
-    <div class="hero__text">
+    <div class="hero__bg" data-parallax-hero>
+      <div class="fundo-grade-movimento" data-density="16" aria-hidden="true"></div>
+      <div data-parallax-layer style="position:absolute;inset:0;">
+        <img src="assets/img/demo-stock/hero-palestra-16x9-demo.webp" alt="Palestrante em pé, microfone na mão, diante de plateia em auditório (foto temporária de demonstração — Unsplash)" width="1920" height="1080" style="width:100%;height:100%;object-fit:cover;">
+      </div>
+    </div>
+    <div class="hero__content">
       <span class="badge">15 anos em Mato Grosso</span>
       <h1>Desenvolvimento que a equipe percebe <span class="text-accent">no dia seguinte</span></h1>
       <p class="lede">Diagnóstico, trilha e medição para líderes e times de empresas de todos os portes em Cuiabá e Várzea Grande.</p>
       <div class="hero__actions">
         <a href="contato.html" class="btn btn--primary">Falar com a equipe →</a>
-        <a href="servicos/index.html" class="btn btn--secondary-navy">Conhecer programas</a>
+        <a href="servicos/index.html" class="btn btn--secondary-white">Conhecer programas</a>
       </div>
       <div class="hero__stats">
         <div class="hero__stat"><strong>+70</strong><span>empresas atendidas</span></div>
@@ -115,13 +120,7 @@
         <div class="hero__stat"><strong>11.239</strong><span>pessoas impactadas</span></div>
       </div>
     </div>
-    <div class="hero__media" data-parallax-hero>
-      <div class="fundo-grade-movimento" data-density="16" aria-hidden="true"></div>
-      <div data-parallax-layer style="position:absolute;inset:0;">
-        <img src="assets/img/demo-stock/hero-palestra-16x9-demo.webp" alt="Palestrante em pé, microfone na mão, diante de plateia em auditório (foto temporária de demonstração — Unsplash)" width="1920" height="1080" style="width:100%;height:100%;object-fit:cover;">
-      </div>
-      <p class="hero__quote">Desenvolvimento que gera pessoas, e pessoas que geram resultado.</p>
-    </div>
+    <p class="hero__quote">Desenvolvimento que gera pessoas, e pessoas que geram resultado.</p>
   </section>
 
   <!-- ============ COMO TRABALHAMOS — título à esquerda, itens à direita (B9, patch 06) ============ -->

@@ -857,31 +857,66 @@
    Home — redesenho editorial (briefing B8–B17)
    ========================================================================== */
 
-/* ---- B8 revisado (patch 04): duas colunas reais, foto sangrando a borda --
-   direita do viewport (sem container em volta dela), texto fora da foto.
-   Substitui o hero full-bleed-com-overlay do patch 03 — mudança de
-   composição pedida a partir da referência de layout. */
+/* ---- B8 revisado (patch 07): foto de fundo full-bleed com degradê, texto
+   sobreposto. Substitui as duas colunas do patch 04 — com coluna de texto
+   fixa em 44%, a foto só ocupava os 56% restantes e sobrava um bloco branco
+   sempre que a composição pedia a foto cobrindo a seção inteira. */
 .hero {
-  display: grid;
-  grid-template-columns: minmax(380px, 44%) 1fr;
+  position: relative;
+  display: flex;
+  align-items: center;
   min-height: 90vh;
-  align-items: stretch;
+  overflow: hidden;
+  color: var(--color-white);
 }
-.hero__text {
+.hero__bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: var(--color-navy); /* fallback sólido enquanto a foto real não chega */
+}
+.hero__bg img { width: 100%; height: 100%; object-fit: cover; }
+/* Degradê navy — opaco atrás do texto pra manter contraste, esvaindo pra a
+   direita até deixar a foto respirar sem overlay (acabamento do patch 05
+   adaptado ao full-bleed) */
+.hero__bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    100deg,
+    rgba(22,32,90,.95) 0%,
+    rgba(22,32,90,.9) 40%,
+    rgba(22,32,90,.6) 62%,
+    rgba(22,32,90,.2) 80%,
+    transparent 95%
+  );
+  pointer-events: none;
+}
+.hero__content {
+  position: relative;
+  z-index: 2;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   gap: var(--space-3);
+  width: 55%;
   padding: var(--space-8) var(--space-4);
   padding-left: max(24px, calc((100vw - var(--container-max)) / 2 + 24px));
 }
-/* Limite de fonte específico do hero — a coluna é só 44% da tela; o H1
-   global (até 68px) estoura aqui em telas comuns (testado em 1366/1920px). */
-.hero__text h1 {
+/* Limite de fonte específico do hero — testado em 1366/1920px pra não
+   estourar a largura do painel de texto sobre a foto. */
+.hero__content h1 {
   font-size: clamp(32px, 3.4vw + 14px, 56px);
   line-height: 1.1;
+  color: var(--color-white);
 }
-.hero__text .lede { font-size: 18px; line-height: 1.6; color: var(--color-gray-dark); max-width: 42ch; }
+.hero__content .lede { font-size: 18px; line-height: 1.6; color: rgba(255,255,255,.85); max-width: 42ch; }
+.hero .badge { color: var(--color-white); border-color: var(--color-white); }
+/* Verde padrão do .text-accent dá contraste insuficiente contra o navy/foto
+   do hero (~2.3:1) — usa o tint claro só aqui, mantém verde normal nas
+   páginas de serviço onde o fundo do H1 ainda é branco */
+.hero .text-accent { color: var(--color-green-light); }
 
 .hero__stats { display: flex; gap: var(--space-5); flex-wrap: wrap; margin-top: var(--space-1); }
 .hero__stat strong {
@@ -889,46 +924,15 @@
   font-family: var(--font-headline);
   font-weight: 700;
   font-size: 26px;
-  color: var(--color-green);
+  color: var(--color-white);
   line-height: 1;
   margin-bottom: 4px;
 }
-.hero__stat span { font-size: 13px; color: var(--color-gray-dark); }
+.hero__stat span { font-size: 13px; color: rgba(255,255,255,.7); }
 
-.hero__media {
-  position: relative;
-  overflow: hidden;
-  background: var(--color-navy); /* fallback sólido enquanto a foto real não chega */
-  min-height: 360px;
-}
-.hero__media img { width: 100%; height: 100%; object-fit: cover; }
-/* Degradê na borda esquerda — a foto "nasce" do branco do painel de texto em
-   vez de cortar reto contra ele (patch 05, acabamento) */
-.hero__media::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  background: linear-gradient(
-    90deg,
-    var(--color-white) 0%,
-    rgba(255,255,255, .6) 3%,
-    transparent 9%
-  );
-  pointer-events: none;
-}
-/* Degradê só na base da foto — legibilidade da frase sobreposta sem apagar
-   a imagem inteira (overlay forte é o que o briefing pede pra evitar) */
-.hero__media::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(0deg, rgba(22,32,90,.72) 0%, transparent 38%);
-  pointer-events: none;
-}
 .hero__quote {
   position: absolute;
-  z-index: 1;
+  z-index: 2;
   right: var(--space-4);
   bottom: var(--space-4);
   max-width: 300px;
@@ -943,10 +947,12 @@
 }
 
 @media (max-width: 900px) {
-  .hero { grid-template-columns: 1fr; min-height: auto; }
-  .hero__text { padding: var(--space-6) var(--space-3) var(--space-4); }
-  .hero__media { min-height: 320px; order: -1; }
-  .hero__quote { max-width: 220px; font-size: 15px; }
+  .hero { min-height: auto; display: block; padding: 96px var(--space-3) var(--space-6); }
+  .hero__bg::after {
+    background: linear-gradient(180deg, rgba(22,32,90,.45) 0%, rgba(22,32,90,.82) 55%, rgba(22,32,90,.95) 100%);
+  }
+  .hero__content { padding: 0; width: auto; max-width: none; }
+  .hero__quote { position: static; max-width: none; text-align: left; margin-top: var(--space-4); }
 }
 
 /* ---- B9 revisado (patch 06): título à esquerda, 3 itens em linha à direita */

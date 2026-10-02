@@ -8,6 +8,7 @@
   --color-green: #1F6B3A;          /* primária — títulos, botões, ícones, elementos de marca */
   --color-green-hover: #1a5c31;    /* hover do botão primário, -12% luminosidade */
   --color-green-dark: #17502A;     /* verde 75% + preto 25% — fundo do footer (patch 06) */
+  --color-green-light: #4FA876;    /* CONFIRMAR: tint fora do manual de marca — criado só pro accent do H1 do hero contra fundo navy/foto (patch 07); verde base (#1F6B3A) dá só ~2.3:1 de contraste aí, abaixo do mínimo AA */
   --color-white: #FFFFFF;          /* base — fundo padrão */
   --color-navy: #16205A;           /* apoio institucional — logotipo, títulos, fundos escuros */
   --color-gray-light: #EFF1EE;     /* fundos de seção, cards, tabelas, campos de formulário */
