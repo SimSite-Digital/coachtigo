@@ -13,7 +13,7 @@
   gap: var(--space-1);
   height: var(--button-height);
   padding: var(--button-padding-y) var(--button-padding-x);
-  border-radius: var(--radius);
+  border-radius: var(--radius-btn);
   border: 1px solid transparent;
   font-family: var(--font-body);
   font-weight: 500;
@@ -250,8 +250,10 @@
 .card {
   background: var(--color-white);
   border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
   box-shadow: var(--card-shadow);
   padding: var(--card-padding);
+  overflow: hidden; /* a borda arredondada precisa recortar a foto interna do card */
 }
 .card__icon {
   width: 48px; height: 48px;
@@ -373,6 +375,7 @@
 .badge {
   display: inline-flex;
   align-items: center;
+  border-radius: var(--radius-badge);
   gap: 8px;
   font-family: var(--font-mono);
   font-size: var(--text-kicker-size);
@@ -395,11 +398,28 @@
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  border-radius: var(--radius-image);
 }
 .media img { width: 100%; height: 100%; object-fit: cover; }
 .media--16x9 { aspect-ratio: 16 / 9; }
 .media--4x3 { aspect-ratio: 4 / 3; }
 .media--1x1 { aspect-ratio: 1 / 1; }
+/* Variante usada nos heros das páginas de serviço — mesmo espírito do
+   degradê do hero da Home, adaptado a uma foto contida (com cantos
+   arredondados), não colada na borda do viewport (patch 05) */
+.media--fade-left::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    90deg,
+    var(--color-white) 0%,
+    rgba(255,255,255, .5) 3%,
+    transparent 12%
+  );
+  pointer-events: none;
+}
 .media__label {
   font-family: var(--font-mono);
   font-size: 12px;
@@ -590,6 +610,16 @@
   font-style: italic;
   margin-bottom: var(--space-2);
 }
+.testimonial__meta { display: flex; align-items: center; justify-content: center; gap: 12px; }
+.testimonial__avatar {
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--color-gray-light);
+  background-image: repeating-linear-gradient(135deg, rgba(63,70,68,.08) 0 2px, transparent 2px 8px);
+}
+.testimonial__meta > div { text-align: left; }
 .testimonial__author { font-weight: 600; color: var(--color-navy); font-size: 14px; }
 .testimonial__role { color: var(--color-gray-dark); font-size: var(--text-small-size); }
 
@@ -607,7 +637,18 @@
 }
 .carousel__track::-webkit-scrollbar { display: none; }
 .carousel__track > * { scroll-snap-align: start; flex: 0 0 min(380px, 85vw); }
-.carousel__controls { display: flex; gap: var(--space-1); justify-content: flex-end; margin-top: var(--space-2); }
+.carousel__controls { display: flex; align-items: center; gap: var(--space-3); justify-content: flex-end; margin-top: var(--space-2); }
+.carousel__controls:has(.carousel__dots) { justify-content: center; }
+.carousel__dots { display: flex; gap: 8px; }
+.carousel__dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  border: 0;
+  padding: 0;
+  background: var(--color-border);
+  cursor: pointer;
+}
+.carousel__dot.is-active { background: var(--color-green); }
 .carousel__btn {
   width: 40px; height: 40px;
   border: 1px solid var(--color-navy);
@@ -617,6 +658,8 @@
 }
 .carousel__btn:hover { background: var(--color-navy); color: var(--color-white); }
 .carousel__btn svg { width: 18px; height: 18px; }
+.carousel__btn--on-navy { background: transparent; border-color: rgba(255,255,255,.4); color: var(--color-white); }
+.carousel__btn--on-navy:hover { background: var(--color-white); color: var(--color-navy); }
 
 /* ---------------------------------------------------------------------- */
 /* Accordion (FAQ)                                                         */
@@ -650,10 +693,15 @@
 /* ---------------------------------------------------------------------- */
 /* Footer                                                                   */
 /* ---------------------------------------------------------------------- */
+/* Fundo verde escuro em vez de branco (patch 06) — texto e ícones em branco,
+   contraste branco/#17502A passa WCAG AAA com folga */
+.site-footer { background: var(--color-green-dark); }
 .site-footer__top {
   padding-block: var(--space-9);
-  border-top: 1px solid var(--color-border);
+  background: var(--color-green-dark);
+  color: var(--color-white);
 }
+.site-footer .brand__wordmark { color: var(--color-white); }
 .site-footer__grid {
   display: grid;
   grid-template-columns: 1.4fr 1fr 1fr 1fr;
@@ -667,17 +715,18 @@
   font-size: 11px;
   letter-spacing: .12em;
   text-transform: uppercase;
-  color: var(--color-gray-dark);
+  color: rgba(255,255,255,.65);
   margin-bottom: var(--space-2);
 }
 .site-footer__list { display: flex; flex-direction: column; gap: 10px; }
-.site-footer__list a { color: var(--color-gray-dark); font-size: 15px; }
-.site-footer__list a:hover { color: var(--color-green); }
+.site-footer__list a { color: var(--color-white); font-size: 15px; }
+.site-footer__list a:hover { color: var(--color-gray-light); }
 
 .site-footer__bottom {
-  background: var(--color-navy);
+  background: var(--color-green-dark);
   color: var(--color-white);
   padding-block: var(--space-2);
+  border-top: 1px solid rgba(255,255,255,.15);
 }
 .site-footer__bottom .container {
   display: flex;
@@ -687,6 +736,7 @@
   font-size: var(--text-small-size);
 }
 .site-footer__bottom a { color: var(--color-white); }
+.site-footer__bottom a:hover { color: var(--color-gray-light); }
 
 /* ---------------------------------------------------------------------- */
 /* WhatsApp flutuante                                                      */
@@ -807,75 +857,114 @@
    Home — redesenho editorial (briefing B8–B17)
    ========================================================================== */
 
-/* ---- B8 revisado (patch 03): hero full-bleed, texto sobreposto a 45% ----
-   Substitui o hero de duas colunas (hero-split) da rodada anterior — aquele
-   layout tinha risco real de estouro de texto numa coluna estreita; esta
-   versão resolve com gradiente horizontal (escuro onde o texto fica, foto
-   visível à direita) em vez de um overlay uniforme que apagaria a foto. */
+/* ---- B8 revisado (patch 04): duas colunas reais, foto sangrando a borda --
+   direita do viewport (sem container em volta dela), texto fora da foto.
+   Substitui o hero full-bleed-com-overlay do patch 03 — mudança de
+   composição pedida a partir da referência de layout. */
 .hero {
-  position: relative;
+  display: grid;
+  grid-template-columns: minmax(380px, 44%) 1fr;
   min-height: 90vh;
+  align-items: stretch;
+}
+.hero__text {
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--space-3);
+  padding: var(--space-8) var(--space-4);
+  padding-left: max(24px, calc((100vw - var(--container-max)) / 2 + 24px));
+}
+/* Limite de fonte específico do hero — a coluna é só 44% da tela; o H1
+   global (até 68px) estoura aqui em telas comuns (testado em 1366/1920px). */
+.hero__text h1 {
+  font-size: clamp(32px, 3.4vw + 14px, 56px);
+  line-height: 1.1;
+}
+.hero__text .lede { font-size: 18px; line-height: 1.6; color: var(--color-gray-dark); max-width: 42ch; }
+
+.hero__stats { display: flex; gap: var(--space-5); flex-wrap: wrap; margin-top: var(--space-1); }
+.hero__stat strong {
+  display: block;
+  font-family: var(--font-headline);
+  font-weight: 700;
+  font-size: 26px;
+  color: var(--color-green);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.hero__stat span { font-size: 13px; color: var(--color-gray-dark); }
+
+.hero__media {
+  position: relative;
   overflow: hidden;
-}
-.hero__bg {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
   background: var(--color-navy); /* fallback sólido enquanto a foto real não chega */
+  min-height: 360px;
 }
-.hero__bg img { width: 100%; height: 100%; object-fit: cover; }
-.hero__bg::after {
+.hero__media img { width: 100%; height: 100%; object-fit: cover; }
+/* Degradê na borda esquerda — a foto "nasce" do branco do painel de texto em
+   vez de cortar reto contra ele (patch 05, acabamento) */
+.hero__media::before {
   content: '';
   position: absolute;
   inset: 0;
+  z-index: 1;
   background: linear-gradient(
     90deg,
-    rgba(22, 32, 90, .93) 0%,
-    rgba(22, 32, 90, .80) 38%,
-    rgba(22, 32, 90, .25) 62%,
-    transparent 85%
+    var(--color-white) 0%,
+    rgba(255,255,255, .6) 3%,
+    transparent 9%
   );
+  pointer-events: none;
 }
-.hero__content {
-  position: relative;
+/* Degradê só na base da foto — legibilidade da frase sobreposta sem apagar
+   a imagem inteira (overlay forte é o que o briefing pede pra evitar) */
+.hero__media::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(0deg, rgba(22,32,90,.72) 0%, transparent 38%);
+  pointer-events: none;
+}
+.hero__quote {
+  position: absolute;
   z-index: 1;
-  max-width: 45%;
+  right: var(--space-4);
+  bottom: var(--space-4);
+  max-width: 300px;
+  text-align: right;
   color: var(--color-white);
-}
-/* Limite de fonte específico do hero — herdado do ajuste testado na rodada
-   anterior: em 45% de largura o H1 global (até 68px) ainda estoura em telas
-   comuns (testado em 1366/1920px); este teto evita o mesmo bug reaparecer. */
-.hero__content h1 {
-  font-size: clamp(32px, 3.4vw + 14px, 56px);
-  line-height: 1.1;
-  color: var(--color-white);
-}
-.hero__content .badge { border-color: var(--color-white); color: var(--color-white); }
-.hero__content .lede { font-size: 18px; line-height: 1.6; color: var(--color-gray-light); max-width: 42ch; }
-
-@media (max-width: 768px) {
-  .hero { min-height: 80vh; align-items: flex-end; padding-bottom: var(--space-6); }
-  .hero__content { max-width: 100%; }
-  .hero__bg::after {
-    background: linear-gradient(
-      0deg,
-      rgba(22, 32, 90, .93) 0%,
-      rgba(22, 32, 90, .75) 45%,
-      rgba(22, 32, 90, .15) 75%,
-      transparent 100%
-    );
-  }
+  font-family: var(--font-headline);
+  font-style: italic;
+  font-size: 17px;
+  line-height: 1.4;
+  border-bottom: 2px solid var(--color-green);
+  padding-bottom: 10px;
 }
 
-/* ---- B9: "Como trabalhamos" — lista editorial numerada, não cards ------- */
-.principles {
+@media (max-width: 900px) {
+  .hero { grid-template-columns: 1fr; min-height: auto; }
+  .hero__text { padding: var(--space-6) var(--space-3) var(--space-4); }
+  .hero__media { min-height: 320px; order: -1; }
+  .hero__quote { max-width: 220px; font-size: 15px; }
+}
+
+/* ---- B9 revisado (patch 06): título à esquerda, 3 itens em linha à direita */
+.how-we-work {
+  display: grid;
+  grid-template-columns: minmax(280px, 30%) 1fr;
+  gap: var(--space-6);
+  align-items: start;
+}
+.how-we-work__items {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: var(--space-5);
+  gap: var(--space-4);
 }
-@media (max-width: 900px) { .principles { grid-template-columns: 1fr; gap: var(--space-4); } }
+@media (max-width: 900px) {
+  .how-we-work { grid-template-columns: 1fr; }
+  .how-we-work__items { grid-template-columns: 1fr; gap: var(--space-4); }
+}
 .principles__item {
   border-top: 1px solid var(--color-border);
   padding-top: var(--space-3);
@@ -890,23 +979,101 @@
 }
 
 /* ---- B10: Mural de empresas — grade estruturada, não flex livre -------- */
-.logo-wall {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: var(--space-4) var(--space-3);
-  align-items: center;
-  justify-items: center;
+/* Cabeçalho com link à direita (Programas, Blog — B11/B15, patch 04) */
+.section-head-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+  margin-bottom: var(--space-5);
 }
-@media (max-width: 900px) { .logo-wall { grid-template-columns: repeat(3, 1fr); } }
-@media (max-width: 640px) { .logo-wall { grid-template-columns: repeat(2, 1fr); } }
+
+/* ---- Nossos Programas — grid uniforme 3x2, peso visual igual (B11, patch 04) ---- */
+.program-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-3);
+}
+@media (max-width: 900px) { .program-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 640px) { .program-grid { grid-template-columns: 1fr; } }
+.program-card {
+  display: block;
+  padding: var(--card-padding);
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  transition: border-color .2s ease;
+}
+.program-card:nth-child(even) { background: var(--color-gray-light); }
+.program-card:hover { border-color: var(--color-green); }
+.program-card__num {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: .04em;
+  color: var(--color-green);
+  margin-bottom: var(--space-2);
+}
+.program-card h3 { margin-bottom: var(--space-1); }
+.program-card p { margin-bottom: var(--space-3); color: var(--color-gray-dark); }
+.program-card__icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-btn);
+  background: var(--color-green);
+  color: var(--color-white);
+  transition: transform .25s ease, background-color .25s ease;
+}
+.program-card__icon-btn svg { width: 16px; height: 16px; }
+.program-card:hover .program-card__icon-btn { transform: translateX(4px); background: var(--color-green-hover); }
+
+/* Cabeçalho da seção de Confiança — kicker+H2 à esquerda, texto à direita, lado a lado (B10, patch 04) */
+.trust-head {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: var(--space-5);
+  align-items: end;
+  margin-bottom: var(--space-5);
+}
+.trust-head h2 { color: var(--color-white); }
+.trust-head p { color: rgba(255,255,255,.75); }
+@media (max-width: 760px) { .trust-head { grid-template-columns: 1fr; } }
+
+/* Faixa com loop infinito (marquee) — fundo navy (B10, patch 06) */
+.logo-wall {
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 6%, #000 94%, transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0, #000 6%, #000 94%, transparent 100%);
+}
+.logo-wall__track {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: var(--space-5);
+  width: max-content;
+  animation: logo-scroll 32s linear infinite;
+}
+.logo-wall:hover .logo-wall__track { animation-play-state: paused; }
+@keyframes logo-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .logo-wall__track { animation: none; }
+}
 .logo-wall__item {
+  flex: 0 0 auto;
   font-family: var(--font-mono);
   font-size: 13px;
   letter-spacing: .04em;
   text-transform: uppercase;
-  color: var(--color-gray-dark);
-  opacity: .65;
+  color: var(--color-white);
+  opacity: .7;
   text-align: center;
+  white-space: nowrap;
 }
 
 /* ---- B11: ServiceCard — hover contido (sem tilt, sem zoom agressivo) --- */
@@ -963,6 +1130,15 @@
 @media (max-width: 640px) { .why-split__grid { grid-template-columns: 1fr; } }
 .why-split__item { border-top: 1px solid var(--color-border); padding-top: var(--space-2); }
 
+/* Nossos Diferenciais — foto à esquerda, texto à direita (B12, patch 04) */
+.diff-split {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: var(--space-6);
+  align-items: center;
+}
+@media (max-width: 900px) { .diff-split { grid-template-columns: 1fr; } }
+
 /* ---- B14: Depoimento — aspas grandes como elemento gráfico ------------- */
 .testimonial__mark {
   font-family: var(--font-headline);
@@ -977,11 +1153,14 @@
 .blog-card__category {
   font-family: var(--font-mono);
   font-size: 11px;
-  letter-spacing: .1em;
+  letter-spacing: .08em;
   text-transform: uppercase;
   color: var(--color-green);
-  display: block;
-  margin-bottom: 8px;
+  background: var(--color-gray-light);
+  display: inline-block;
+  border-radius: var(--radius-badge);
+  padding: 4px 12px;
+  margin-bottom: 12px;
 }
 
 /* ---- B17: Newsletter — horizontal compacta (título+texto | campo+botão) */
@@ -994,6 +1173,13 @@
 @media (max-width: 760px) { .newsletter-split { grid-template-columns: 1fr; } }
 .newsletter-split form { display: flex; gap: 12px; }
 @media (max-width: 420px) { .newsletter-split form { flex-direction: column; } }
+
+/* ---- Home — CTA final com foto e overlay (B16, patch 04) --------------- */
+.cta-final { position: relative; overflow: hidden; color: var(--color-white); }
+.cta-final__bg { position: absolute; inset: 0; z-index: 0; background: var(--color-navy); }
+.cta-final__bg img { width: 100%; height: 100%; object-fit: cover; }
+.cta-final__bg::after { content: ''; position: absolute; inset: 0; background: var(--overlay-navy-62); }
+.cta-final h2 { color: var(--color-white); }
 
 /* ---- Sobre Nós — CTA final com foto e parallax sutil (patch item 4) ---- */
 .sobre-cta {

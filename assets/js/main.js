@@ -46,7 +46,7 @@
   });
 
   /* ---------------------------------------------------------------- */
-  /* Carrossel (depoimentos / logos) — setas de rolagem                */
+  /* Carrossel (depoimentos / logos) — setas de rolagem + dots          */
   /* ---------------------------------------------------------------- */
   document.querySelectorAll('[data-carousel]').forEach(function (carousel) {
     var track = carousel.querySelector('[data-carousel-track]');
@@ -59,6 +59,36 @@
     };
     if (next) next.addEventListener('click', function () { track.scrollBy({ left: step(), behavior: 'smooth' }); });
     if (prev) prev.addEventListener('click', function () { track.scrollBy({ left: -step(), behavior: 'smooth' }); });
+
+    var dotsContainer = carousel.querySelector('[data-carousel-dots]');
+    if (!dotsContainer) return;
+    var slides = Array.prototype.slice.call(track.children);
+    var dots = slides.map(function (slide, i) {
+      var dot = document.createElement('button');
+      dot.type = 'button';
+      dot.className = 'carousel__dot' + (i === 0 ? ' is-active' : '');
+      dot.setAttribute('aria-label', 'Ir para o depoimento ' + (i + 1));
+      dot.addEventListener('click', function () {
+        var target = slide.getBoundingClientRect().left - track.getBoundingClientRect().left + track.scrollLeft;
+        track.scrollTo({ left: target, behavior: 'smooth' });
+      });
+      dotsContainer.appendChild(dot);
+      return dot;
+    });
+
+    var syncActiveDot = function () {
+      var trackRect = track.getBoundingClientRect();
+      var closest = 0;
+      var closestDist = Infinity;
+      slides.forEach(function (slide, i) {
+        var dist = Math.abs(slide.getBoundingClientRect().left - trackRect.left);
+        if (dist < closestDist) { closestDist = dist; closest = i; }
+      });
+      dots.forEach(function (dot, i) { dot.classList.toggle('is-active', i === closest); });
+    };
+    track.addEventListener('scroll', function () {
+      window.requestAnimationFrame(syncActiveDot);
+    }, { passive: true });
   });
 
   /* ---------------------------------------------------------------- */

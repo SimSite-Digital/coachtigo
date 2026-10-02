@@ -64,6 +64,10 @@ h3 {
   color: var(--color-navy);
 }
 
+/* Trecho de destaque dentro de um título — um só por H1, nunca mais de um
+   (patch 05): o resto do título mantém a cor padrão (marinho/herdada) */
+.text-accent { color: var(--color-green); }
+
 .kicker {
   font-family: var(--font-mono);
   font-size: var(--text-kicker-size);

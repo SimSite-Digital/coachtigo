@@ -7,6 +7,7 @@
   /* ---- Cor — paleta fixa, 5 cores + branco (proporção 60/25/10/5) ---- */
   --color-green: #1F6B3A;          /* primária — títulos, botões, ícones, elementos de marca */
   --color-green-hover: #1a5c31;    /* hover do botão primário, -12% luminosidade */
+  --color-green-dark: #17502A;     /* verde 75% + preto 25% — fundo do footer (patch 06) */
   --color-white: #FFFFFF;          /* base — fundo padrão */
   --color-navy: #16205A;           /* apoio institucional — logotipo, títulos, fundos escuros */
   --color-gray-light: #EFF1EE;     /* fundos de seção, cards, tabelas, campos de formulário */
@@ -57,7 +58,16 @@
   --section-gap-mobile: var(--space-8);   /* 64px */
 
   /* ---- Componentes ---- */
-  --radius: 0;                     /* raio 0 em toda a interface, sem exceção */
+  /* MUDANÇA DELIBERADA (patch 04, documentada): o Manual de Marca v1.0 pedia
+     raio 0 "sem exceção". O cliente pediu cantos arredondados (referência de
+     composição enviada) — botões em pill, cards e fotos com raio suave.
+     --radius continua em 0 e segue valendo para o que não foi listado no
+     patch (campos de formulário, botão terciário, timeline, accordion). */
+  --radius: 0;
+  --radius-btn: 999px;
+  --radius-card: 16px;
+  --radius-image: 12px;
+  --radius-badge: 999px;
   --button-height: 44px;
   --button-padding-y: 12px;
   --button-padding-x: 22px;
