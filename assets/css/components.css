@@ -837,48 +837,54 @@
    Home — redesenho editorial (briefing B8–B17)
    ========================================================================== */
 
-/* ---- Hero v2 (reconstrução homepage) — fundo branco, foto como camada de
-   imagem absoluta ocupando a direita, dissolvendo em degradê branco (sem
-   borda reta). Substitui o full-bleed-com-overlay-navy da versão anterior;
-   CSS de partida vem do próprio prompt, só adaptado aos tokens do projeto. */
+/* ---- Hero v3 — foto 100% de fundo (edge-to-edge), overlay escuro por cima
+   pra legibilidade, texto sobreposto. Pedido explícito do cliente: "a
+   imagem de fundo tem que ser o fundo, não ocupar só uma porcentagem do
+   bloco" — substitui a v2 (texto 52%/foto 48% em colunas), que o prompt da
+   nova Home original pedia mas não era o que o cliente queria. */
 .hero {
   position: relative;
   min-height: clamp(560px, 86vh, 760px);
   display: flex;
   align-items: center;
   overflow: hidden;
-  background: var(--color-white);
+  color: var(--color-white);
 }
-.hero__media { position: absolute; inset: 0 0 0 38%; z-index: 0; background: var(--color-white); overflow: hidden; }
+.hero__media { position: absolute; inset: 0; z-index: 0; background: var(--color-navy); }
 .hero__img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center right;
+  object-position: center 30%;
   animation: hero-kenburns 26s ease-in-out infinite alternate;
 }
-/* Degradê bem leve — só o suficiente pra foto não cortar seco contra o
-   branco; "muito mais fraco" foi pedido explicitamente (ficava lavado) */
-.hero__media::before {
+/* Overlay escuro — mais forte atrás do texto (esquerda), esvaindo pra a
+   direita até deixar a foto respirar sem camada por cima */
+.hero__media::after {
   content: '';
   position: absolute;
   inset: 0;
   z-index: 1;
-  background: linear-gradient(90deg, rgba(255,255,255,.55) 0%, rgba(255,255,255,.22) 9%, rgba(255,255,255,0) 20%);
+  background: linear-gradient(
+    100deg,
+    rgba(22, 32, 90, .82) 0%,
+    rgba(22, 32, 90, .68) 32%,
+    rgba(22, 32, 90, .38) 55%,
+    rgba(22, 32, 90, .12) 75%,
+    transparent 92%
+  );
 }
 /* forma de marca flutuando atrás do texto — só contorno, bem discreta */
 .hero__shape {
   position: absolute;
-  z-index: 0;
+  z-index: 1;
   pointer-events: none;
-  opacity: .1;
+  opacity: .12;
   animation: hero-float 14s ease-in-out infinite alternate;
 }
-.hero__shape--circle { width: 220px; height: 220px; border-radius: 50%; border: 1.5px solid var(--color-navy); left: -60px; top: 12%; }
+.hero__shape--circle { width: 220px; height: 220px; border-radius: 50%; border: 1.5px solid var(--color-white); left: -60px; top: 12%; }
 @keyframes hero-kenburns { from { transform: scale(1); } to { transform: scale(1.07) translate3d(-1%, 0, 0); } }
 @keyframes hero-float { from { transform: translateY(0); } to { transform: translateY(-18px); } }
-/* .hero__inner já é .container (centraliza + padding-inline padrão) — não
-   soma outro padding-left por cima, senão desalinha do logo do header */
 .hero__inner {
   position: relative;
   z-index: 2;
@@ -887,18 +893,23 @@
   padding-bottom: var(--space-4);
 }
 .hero__content {
-  max-width: min(52%, 640px);
+  max-width: min(640px, 52%);
   display: flex;
   flex-direction: column;
   gap: var(--space-3);
 }
-@media (max-width: 860px) { .hero__inner { padding-top: 0; padding-bottom: 0; } }
-.hero__content h1 { font-size: clamp(36px, 3.6vw + 16px, 60px); line-height: 1.1; }
-.hero__content .lede { font-size: 18px; line-height: 1.6; color: var(--color-gray-dark); max-width: 48ch; }
+.hero__content h1 { font-size: clamp(36px, 3.6vw + 16px, 60px); line-height: 1.1; color: var(--color-white); }
+.hero__content .lede { font-size: 18px; line-height: 1.6; color: rgba(255,255,255,.85); max-width: 48ch; }
+.hero .badge, .hero .kicker { color: var(--color-white); border-color: var(--color-white); }
+/* Verde padrão do .text-accent dá contraste insuficiente contra o overlay
+   navy (~2.3:1) — tint mais claro só aqui */
+.hero .text-accent { color: var(--color-green-light); }
+.hero .btn--secondary-navy { border-color: var(--color-white); color: var(--color-white); }
+.hero .btn--secondary-navy:hover { background: var(--color-white); color: var(--color-navy); }
 
 .hero__stats { display: flex; gap: var(--space-5); flex-wrap: wrap; margin-top: var(--space-1); }
 .hero__stat { position: relative; padding-left: var(--space-3); }
-.hero__stat::before { content: ''; position: absolute; left: 0; top: 2px; bottom: 2px; width: 1px; background: var(--color-border); }
+.hero__stat::before { content: ''; position: absolute; left: 0; top: 2px; bottom: 2px; width: 1px; background: rgba(255,255,255,.3); }
 .hero__stat:first-child { padding-left: 0; }
 .hero__stat:first-child::before { display: none; }
 .hero__stat strong {
@@ -906,17 +917,18 @@
   font-family: var(--font-display);
   font-weight: 700;
   font-size: 26px;
-  color: var(--color-green);
+  color: var(--color-white);
   line-height: 1;
   margin-bottom: 4px;
 }
-.hero__stat span { font-size: 13px; color: var(--color-gray-dark); }
+.hero__stat span { font-size: 13px; color: rgba(255,255,255,.75); }
 
 @media (max-width: 860px) {
-  .hero { flex-direction: column; align-items: stretch; min-height: auto; padding-top: 88px; }
-  .hero__media { position: relative; inset: auto; height: 62vw; max-height: 420px; order: -1; }
-  .hero__media::before { background: linear-gradient(180deg, rgba(255,255,255,0) 55%, var(--color-white) 100%); }
-  .hero__content { max-width: 100%; padding: var(--space-5) var(--space-3) 0; }
+  .hero { min-height: auto; padding-top: 88px; padding-bottom: var(--space-6); }
+  .hero__media::after {
+    background: linear-gradient(180deg, rgba(22,32,90,.35) 0%, rgba(22,32,90,.72) 55%, rgba(22,32,90,.85) 100%);
+  }
+  .hero__content { max-width: 100%; }
   .hero__shape { display: none; }
 }
 
