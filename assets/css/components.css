@@ -849,7 +849,7 @@
   overflow: hidden;
   background: var(--color-white);
 }
-.hero__media { position: absolute; inset: 0 0 0 38%; z-index: 0; background: var(--color-gray-light); }
+.hero__media { position: absolute; inset: 0 0 0 38%; z-index: 0; background: var(--color-white); overflow: hidden; }
 .hero__img {
   width: 100%;
   height: 100%;
@@ -857,14 +857,16 @@
   object-position: center right;
   animation: hero-kenburns 26s ease-in-out infinite alternate;
 }
+/* Degradê bem leve — só o suficiente pra foto não cortar seco contra o
+   branco; "muito mais fraco" foi pedido explicitamente (ficava lavado) */
 .hero__media::before {
   content: '';
   position: absolute;
   inset: 0;
   z-index: 1;
-  background: linear-gradient(90deg, var(--color-white) 0%, rgba(255,255,255,.88) 14%, rgba(255,255,255,0) 44%);
+  background: linear-gradient(90deg, rgba(255,255,255,.55) 0%, rgba(255,255,255,.22) 9%, rgba(255,255,255,0) 20%);
 }
-/* formas de marca flutuando atrás do texto — só contorno, bem discretas */
+/* forma de marca flutuando atrás do texto — só contorno, bem discreta */
 .hero__shape {
   position: absolute;
   z-index: 0;
@@ -873,15 +875,16 @@
   animation: hero-float 14s ease-in-out infinite alternate;
 }
 .hero__shape--circle { width: 220px; height: 220px; border-radius: 50%; border: 1.5px solid var(--color-navy); left: -60px; top: 12%; }
-.hero__shape--line { width: 340px; height: 1.5px; background: var(--color-green); left: 2%; bottom: 18%; animation-delay: -6s; }
 @keyframes hero-kenburns { from { transform: scale(1); } to { transform: scale(1.07) translate3d(-1%, 0, 0); } }
 @keyframes hero-float { from { transform: translateY(0); } to { transform: translateY(-18px); } }
+/* .hero__inner já é .container (centraliza + padding-inline padrão) — não
+   soma outro padding-left por cima, senão desalinha do logo do header */
 .hero__inner {
   position: relative;
   z-index: 2;
   width: 100%;
-  padding-left: max(24px, calc((100vw - var(--container-max)) / 2 + 24px));
-  padding-right: 24px;
+  padding-top: var(--space-4);
+  padding-bottom: var(--space-4);
 }
 .hero__content {
   max-width: min(52%, 640px);
@@ -889,7 +892,7 @@
   flex-direction: column;
   gap: var(--space-3);
 }
-@media (max-width: 860px) { .hero__inner { padding-left: 0; padding-right: 0; } }
+@media (max-width: 860px) { .hero__inner { padding-top: 0; padding-bottom: 0; } }
 .hero__content h1 { font-size: clamp(36px, 3.6vw + 16px, 60px); line-height: 1.1; }
 .hero__content .lede { font-size: 18px; line-height: 1.6; color: var(--color-gray-dark); max-width: 48ch; }
 
@@ -1249,9 +1252,13 @@
 }
 .m-big .mosaic-photo { min-height: 100%; }
 .mosaic-photo .sui-inclina__corpo { padding: 0; height: 100%; min-height: 280px; }
-.mosaic-photo__img {
-  position: absolute;
-  inset: 0;
+/* .sui-inclina__corpo > :not(...) do componente força position:relative com
+   especificidade maior que uma classe simples — precisa de !important aqui
+   pra imagem realmente preencher o cartão (sem isso ela some, dá só um
+   retângulo pequeno no fluxo normal) */
+.sui-inclina__corpo > .mosaic-photo__img {
+  position: absolute !important;
+  inset: 0 !important;
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -1274,7 +1281,6 @@
 .mosaic-photo__link { display: inline-flex; align-items: center; gap: 6px; color: var(--color-white); font-weight: 600; font-size: 14px; }
 .mosaic-photo__link svg { width: 16px; height: 16px; transition: transform .25s var(--ease); }
 .mosaic-photo[data-ativo] .mosaic-photo__link svg { transform: translateX(4px); }
-.mosaic-photo__img { }
 @media (hover: none) { .mosaic-photo[data-ativo] .mosaic-photo__img { transform: none; } }
 
 /* cards claros (3 serviços restantes) — sem tilt, ícone verde + hover sutil */
@@ -1315,6 +1321,9 @@
   position: relative;
   z-index: 1;
   width: 100%;
+  height: auto;
+  aspect-ratio: 1000 / 1499;
+  object-fit: cover;
   border-radius: var(--radius-image);
   display: block;
 }
