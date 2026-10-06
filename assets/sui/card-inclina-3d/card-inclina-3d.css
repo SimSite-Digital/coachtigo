@@ -1,0 +1,162 @@
+/*!
+ * SUI · card-inclina-3d
+ * Cartão que inclina acompanhando o cursor, com brilho que segue o ponteiro,
+ * cantos que aparecem e número grande ao fundo.
+ *
+ * _core/tokens.css é opcional: todo token tem valor de reserva.
+ */
+
+.sui-inclina {
+  position: relative;
+  display: block;
+  perspective: var(--sui-inclina-perspectiva, 900px);
+}
+
+.sui-inclina__corpo {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: .75rem;
+  padding: 2.25rem 1.875rem 2rem;
+  background: var(--sui-surface, #151E2E);
+  border: 1px solid var(--sui-line, rgba(255, 255, 255, .08));
+  border-radius: var(--sui-radius-card, 12px);
+  color: var(--sui-text, #E8EFF6);
+  overflow: hidden;
+  isolation: isolate;
+  transform-style: preserve-3d;
+  will-change: transform;
+  transition:
+    transform var(--sui-dur-base, .4s) var(--sui-ease, cubic-bezier(.22, .61, .36, 1)),
+    border-color var(--sui-dur-base, .4s) var(--sui-ease, cubic-bezier(.22, .61, .36, 1)),
+    background-color var(--sui-dur-base, .4s) var(--sui-ease, cubic-bezier(.22, .61, .36, 1));
+}
+
+.sui-inclina[data-ativo] .sui-inclina__corpo {
+  border-color: var(--sui-accent, #34C6F4);
+  background: var(--sui-surface-2, #1E2A3D);
+  transition: border-color var(--sui-dur-base, .4s) var(--sui-ease, cubic-bezier(.22, .61, .36, 1)),
+              background-color var(--sui-dur-base, .4s) var(--sui-ease, cubic-bezier(.22, .61, .36, 1));
+  /* transform fica sem transição enquanto o mouse move: a inclinação precisa
+     acompanhar o cursor sem atraso. A transição volta ao sair. */
+}
+
+/* brilho que segue o ponteiro */
+.sui-inclina__brilho {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0;
+  background: radial-gradient(
+    circle at var(--sui-bx, 50%) var(--sui-by, 50%),
+    color-mix(in srgb, var(--sui-accent, #34C6F4) 22%, transparent) 0%,
+    transparent 55%);
+  transition: opacity var(--sui-dur-base, .4s) var(--sui-ease, cubic-bezier(.22, .61, .36, 1));
+}
+
+.sui-inclina[data-ativo] .sui-inclina__brilho { opacity: 1; }
+
+/* cantos técnicos */
+.sui-inclina__cantos {
+  position: absolute;
+  inset: 12px;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.sui-inclina__cantos i {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border: 1px solid var(--sui-accent, #34C6F4);
+  opacity: 0;
+  transition:
+    opacity var(--sui-dur-base, .4s) var(--sui-ease, cubic-bezier(.22, .61, .36, 1)),
+    transform var(--sui-dur-base, .4s) var(--sui-ease, cubic-bezier(.22, .61, .36, 1));
+}
+
+.sui-inclina__cantos i:nth-child(1) { top: 0; left: 0; border-right: 0; border-bottom: 0; transform: translate(-5px, -5px); }
+.sui-inclina__cantos i:nth-child(2) { top: 0; right: 0; border-left: 0; border-bottom: 0; transform: translate(5px, -5px); }
+.sui-inclina__cantos i:nth-child(3) { bottom: 0; right: 0; border-left: 0; border-top: 0; transform: translate(5px, 5px); }
+.sui-inclina__cantos i:nth-child(4) { bottom: 0; left: 0; border-right: 0; border-top: 0; transform: translate(-5px, 5px); }
+
+.sui-inclina[data-ativo] .sui-inclina__cantos i {
+  opacity: .9;
+  transform: translate(0, 0);
+}
+
+/* número grande ao fundo */
+.sui-inclina__numero {
+  position: absolute;
+  top: -.25em;
+  right: .15em;
+  z-index: 0;
+  font-family: var(--sui-font-display, 'Sora', system-ui, sans-serif);
+  font-size: var(--sui-inclina-num, 7rem);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  letter-spacing: -.04em;
+  color: var(--sui-text, #E8EFF6);
+  opacity: .05;
+  pointer-events: none;
+  transition: opacity var(--sui-dur-base, .4s) var(--sui-ease, cubic-bezier(.22, .61, .36, 1)),
+              color var(--sui-dur-base, .4s) var(--sui-ease, cubic-bezier(.22, .61, .36, 1));
+}
+
+.sui-inclina[data-ativo] .sui-inclina__numero {
+  opacity: .12;
+  color: var(--sui-accent, #34C6F4);
+}
+
+/* conteúdo, acima do brilho e do número */
+.sui-inclina__corpo > :not(.sui-inclina__brilho):not(.sui-inclina__cantos):not(.sui-inclina__numero) {
+  position: relative;
+  z-index: 4;
+}
+
+.sui-inclina__icone {
+  width: 2rem;
+  height: 2rem;
+  margin-bottom: .5rem;
+  color: var(--sui-accent, #34C6F4);
+  transition: color var(--sui-dur-base, .4s) var(--sui-ease, cubic-bezier(.22, .61, .36, 1));
+}
+
+.sui-inclina[data-ativo] .sui-inclina__icone { color: var(--sui-accent-2, #F0821E); }
+
+.sui-inclina h3 {
+  margin: 0;
+  font-family: var(--sui-font-display, 'Sora', system-ui, sans-serif);
+  font-size: 1.375rem;
+  font-weight: 600;
+  letter-spacing: -.01em;
+  line-height: 1.25;
+}
+
+.sui-inclina p {
+  margin: 0;
+  max-width: 44ch;
+  font-family: var(--sui-font-text, 'Inter', system-ui, sans-serif);
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--sui-muted, #93A4B8);
+}
+
+.sui-inclina:focus-within .sui-inclina__corpo {
+  outline: 2px solid var(--sui-accent, #34C6F4);
+  outline-offset: 3px;
+}
+
+/* sem ponteiro fino não há inclinação: no toque o cartão fica parado */
+@media (hover: none) {
+  .sui-inclina__corpo { transform: none !important; }
+  .sui-inclina__brilho { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sui-inclina__corpo { transform: none !important; transition-duration: .01ms !important; }
+  .sui-inclina__brilho { display: none; }
+  .sui-inclina__cantos i { transition-duration: .01ms !important; transform: none; }
+}

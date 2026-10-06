@@ -1,0 +1,57 @@
+/*!
+ * SUI · fundo-grade-movimento
+ * Grade técnica de 1px com blocos que derivam por cima.
+ * Depende de _core/tokens.css.
+ */
+
+.sui-grade {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+  /* a grade some nas bordas para não virar moldura */
+  -webkit-mask-image: radial-gradient(ellipse 90% 75% at 50% 45%, #000 35%, transparent 100%);
+          mask-image: radial-gradient(ellipse 90% 75% at 50% 45%, #000 35%, transparent 100%);
+}
+
+/* malha de 1px */
+.sui-grade::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  background-image:
+    linear-gradient(to right,  color-mix(in srgb, var(--sui-accent, #34C6F4) 8%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in srgb, var(--sui-accent, #34C6F4) 8%, transparent) 1px, transparent 1px);
+  background-size: var(--sui-grade-size, 64px) var(--sui-grade-size, 64px);
+}
+
+.sui-grade i {
+  position: absolute;
+  display: block;
+  border-radius: var(--sui-radius-block, 2px);
+  background: var(--sui-accent, #34C6F4);
+  will-change: transform, opacity;
+  animation: sui-grade-drift var(--sui-dur, 18s) ease-in-out var(--sui-delay, 0s) infinite alternate;
+}
+
+@keyframes sui-grade-drift {
+  from {
+    transform: translate3d(0, 0, 0);
+    opacity: var(--sui-o1, .10);
+  }
+  to {
+    transform: translate3d(var(--sui-dx, 24px), var(--sui-dy, -32px), 0);
+    opacity: var(--sui-o2, .32);
+  }
+}
+
+/* o conteúdo irmão precisa subir acima da grade */
+.sui-grade ~ * {
+  position: relative;
+  z-index: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sui-grade i { animation: none; opacity: .18; }
+}

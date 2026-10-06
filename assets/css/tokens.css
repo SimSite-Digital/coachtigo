@@ -24,7 +24,11 @@
   --overlay-navy-62: rgba(22, 32, 90, 0.62); /* overlay padrão texto sobre foto */
 
   /* ---- Tipografia ---- */
-  --font-headline: 'Spectral', Georgia, 'Times New Roman', serif;
+  /* --font-display é o ponto único de troca (ex.: IBM Plex Sans 700 no lugar
+     de Spectral) — mude só esta variável. --font-headline aponta pra ela e
+     continua em uso no CSS existente, sem precisar tocar cada arquivo. */
+  --font-display: 'Spectral', Georgia, 'Times New Roman', serif;
+  --font-headline: var(--font-display);
   --font-body: 'IBM Plex Sans', Helvetica, Arial, sans-serif;
   --font-mono: 'IBM Plex Mono', 'Courier New', monospace;
 
@@ -79,6 +83,12 @@
 
   /* Easing custom para transições JS (tilt 3D, retorno de hover) — nunca ease/linear padrão */
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Sistema de movimento da homepage v2 (prompt §6) — reveal ao rolar */
+  --ease: cubic-bezier(.22, .61, .36, 1);
+  --dur-1: .3s;
+  --dur-2: .6s;
+  --dur-3: .9s;
 
   /* ---- Layout ---- */
   --container-max: 1280px;

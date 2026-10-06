@@ -80,28 +80,8 @@
     }
   }
 
-  /* ==================================================================== */
-  /* Fundo em grade com movimento — aproximação própria (ver CONFIRMAR em  */
-  /* components.css: o arquivo real da biblioteca nunca foi enviado).      */
-  /* Gera N pontos com posição e opacidade aleatórias, cada um com sua     */
-  /* própria duração/atraso de animação — evita o efeito "pisca junto".    */
-  /* Opacidade sempre ≤ 12% (regra do manual para padrão sob texto).       */
-  /* ==================================================================== */
-  document.querySelectorAll('.fundo-grade-movimento[data-density]').forEach(function (el) {
-    var density = parseInt(el.getAttribute('data-density'), 10) || 20;
-    for (var i = 0; i < density; i++) {
-      var dot = document.createElement('span');
-      dot.className = 'fundo-grade-movimento__dot';
-      dot.style.left = (Math.random() * 100).toFixed(1) + '%';
-      dot.style.top = (Math.random() * 100).toFixed(1) + '%';
-      dot.style.setProperty('--dot-o1', (0.04 + Math.random() * 0.03).toFixed(2));
-      dot.style.setProperty('--dot-o2', (0.08 + Math.random() * 0.04).toFixed(2));
-      if (!reduceMotion) {
-        dot.style.animationDuration = (14 + Math.random() * 12).toFixed(1) + 's';
-        dot.style.animationDelay = (Math.random() * -20).toFixed(1) + 's';
-      }
-      el.appendChild(dot);
-    }
-  });
+  /* Fundo em grade com movimento — agora e o componente real da biblioteca */
+  /* SUI (assets/sui/fundo-grade-movimento/), que se registra sozinho via   */
+  /* data-sui-grade. Nada a inicializar aqui.                               */
 
 })();

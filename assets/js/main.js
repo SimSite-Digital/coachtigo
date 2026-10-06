@@ -47,7 +47,12 @@
 
   /* ---------------------------------------------------------------- */
   /* Carrossel (depoimentos / logos) — setas de rolagem + dots          */
+  /* Depoimentos (homepage v2) ainda ganham: contador "01 / 05",        */
+  /* avanço automático a cada 8s com barra de progresso, pausa no       */
+  /* hover/foco — tudo opt-in via [data-carousel-autoplay].             */
   /* ---------------------------------------------------------------- */
+  var reduceMotionMain = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
   document.querySelectorAll('[data-carousel]').forEach(function (carousel) {
     var track = carousel.querySelector('[data-carousel-track]');
     var prev = carousel.querySelector('[data-carousel-prev]');
@@ -57,26 +62,35 @@
       var card = track.querySelector(':scope > *');
       return card ? card.getBoundingClientRect().width + 24 : 300;
     };
-    if (next) next.addEventListener('click', function () { track.scrollBy({ left: step(), behavior: 'smooth' }); });
-    if (prev) prev.addEventListener('click', function () { track.scrollBy({ left: -step(), behavior: 'smooth' }); });
+    var goTo = function (index) {
+      var slide = slides[index];
+      if (!slide) return;
+      var target = slide.getBoundingClientRect().left - track.getBoundingClientRect().left + track.scrollLeft;
+      track.scrollTo({ left: target, behavior: 'smooth' });
+    };
 
     var dotsContainer = carousel.querySelector('[data-carousel-dots]');
-    if (!dotsContainer) return;
+    if (!dotsContainer) {
+      if (next) next.addEventListener('click', function () { track.scrollBy({ left: step(), behavior: 'smooth' }); });
+      if (prev) prev.addEventListener('click', function () { track.scrollBy({ left: -step(), behavior: 'smooth' }); });
+      return;
+    }
     var slides = Array.prototype.slice.call(track.children);
+    var counter = carousel.querySelector('[data-carousel-counter]');
+    var total = slides.length;
+    var current = 0;
     var dots = slides.map(function (slide, i) {
       var dot = document.createElement('button');
       dot.type = 'button';
       dot.className = 'carousel__dot' + (i === 0 ? ' is-active' : '');
       dot.setAttribute('aria-label', 'Ir para o depoimento ' + (i + 1));
-      dot.addEventListener('click', function () {
-        var target = slide.getBoundingClientRect().left - track.getBoundingClientRect().left + track.scrollLeft;
-        track.scrollTo({ left: target, behavior: 'smooth' });
-      });
+      dot.addEventListener('click', function () { goTo(i); resetAutoplay(); });
       dotsContainer.appendChild(dot);
       return dot;
     });
 
-    var syncActiveDot = function () {
+    var pad2 = function (n) { return n < 10 ? '0' + n : String(n); };
+    var syncActive = function () {
       var trackRect = track.getBoundingClientRect();
       var closest = 0;
       var closestDist = Infinity;
@@ -84,11 +98,45 @@
         var dist = Math.abs(slide.getBoundingClientRect().left - trackRect.left);
         if (dist < closestDist) { closestDist = dist; closest = i; }
       });
+      current = closest;
       dots.forEach(function (dot, i) { dot.classList.toggle('is-active', i === closest); });
+      if (counter) counter.textContent = pad2(closest + 1) + ' / ' + pad2(total);
     };
     track.addEventListener('scroll', function () {
-      window.requestAnimationFrame(syncActiveDot);
+      window.requestAnimationFrame(syncActive);
     }, { passive: true });
+    syncActive();
+
+    if (next) next.addEventListener('click', function () { goTo((current + 1) % total); resetAutoplay(); });
+    if (prev) prev.addEventListener('click', function () { goTo((current - 1 + total) % total); resetAutoplay(); });
+
+    /* ---- Avanço automático + barra de progresso ---- */
+    if (!carousel.hasAttribute('data-carousel-autoplay') || reduceMotionMain) return;
+    var progressBar = carousel.querySelector('[data-carousel-progress]');
+    var delay = parseInt(carousel.getAttribute('data-carousel-autoplay'), 10) || 8000;
+    var timer = null;
+
+    var playProgress = function () {
+      if (!progressBar) return;
+      progressBar.style.animation = 'none';
+      void progressBar.offsetWidth; // reinicia a animação (força reflow)
+      progressBar.style.animation = 'carousel-progress ' + delay + 'ms linear forwards';
+    };
+    var startAutoplay = function () {
+      playProgress();
+      timer = setInterval(function () { goTo((current + 1) % total); playProgress(); }, delay);
+    };
+    var stopAutoplay = function () {
+      if (timer) { clearInterval(timer); timer = null; }
+      if (progressBar) progressBar.style.animationPlayState = 'paused';
+    };
+    function resetAutoplay() { stopAutoplay(); startAutoplay(); }
+
+    carousel.addEventListener('mouseenter', stopAutoplay);
+    carousel.addEventListener('mouseleave', startAutoplay);
+    carousel.addEventListener('focusin', stopAutoplay);
+    carousel.addEventListener('focusout', startAutoplay);
+    startAutoplay();
   });
 
   /* ---------------------------------------------------------------- */
@@ -111,16 +159,34 @@
   }
 
   /* ---------------------------------------------------------------- */
-  /* Header — sombra ao rolar                                          */
+  /* Header — vidro fosco depois de 24px de rolagem (homepage v2, §3)  */
   /* ---------------------------------------------------------------- */
   var header = document.querySelector('[data-site-header]');
   if (header) {
     var onScroll = function () {
-      if (window.scrollY > 4) header.style.boxShadow = '0 1px 3px rgba(22,32,90,.07)';
-      else header.style.boxShadow = 'none';
+      header.setAttribute('data-scrolled', window.scrollY > 24 ? 'true' : 'false');
     };
     document.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
+  }
+
+  /* ---------------------------------------------------------------- */
+  /* Revelar ao rolar — [data-reveal], um único IntersectionObserver    */
+  /* (homepage v2, §6). Animação só em transform/opacity; respeita      */
+  /* prefers-reduced-motion via CSS (estado final já visível).          */
+  /* ---------------------------------------------------------------- */
+  if ('IntersectionObserver' in window) {
+    var revealIO = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-in');
+          revealIO.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    document.querySelectorAll('[data-reveal]').forEach(function (el) { revealIO.observe(el); });
+  } else {
+    document.querySelectorAll('[data-reveal]').forEach(function (el) { el.classList.add('is-in'); });
   }
 
   /* ---------------------------------------------------------------- */
