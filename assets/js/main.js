@@ -251,4 +251,77 @@
         });
     });
   });
+
+  /* ---------------------------------------------------------------- */
+  /* Filtro de categoria — Cases (Todos / Palestras / Treinamentos /   */
+  /* Mapeamento e workshops). Tudo no HTML estático; o filtro só       */
+  /* aplica [hidden] — nada é injetado por JS.                         */
+  /* ---------------------------------------------------------------- */
+  var casesFilterButtons = document.querySelectorAll('[data-cases-filter]');
+  if (casesFilterButtons.length) {
+    var caseCards = document.querySelectorAll('[data-case-category]');
+    var casesEmpty = document.querySelector('[data-cases-empty]');
+    casesFilterButtons.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        casesFilterButtons.forEach(function (b) {
+          b.classList.remove('is-active');
+          b.setAttribute('aria-selected', 'false');
+        });
+        btn.classList.add('is-active');
+        btn.setAttribute('aria-selected', 'true');
+        var filter = btn.getAttribute('data-cases-filter');
+        var visibleCount = 0;
+        caseCards.forEach(function (card) {
+          var match = filter === 'todos' || card.getAttribute('data-case-category') === filter;
+          card.hidden = !match;
+          if (match) visibleCount++;
+        });
+        if (casesEmpty) casesEmpty.hidden = visibleCount > 0;
+      });
+    });
+  }
+
+  /* ---------------------------------------------------------------- */
+  /* Modal "Ver fotos" — <dialog> nativo (showModal cuida do foco      */
+  /* preso e do backdrop; Esc fecha nativamente). JS cuida só da       */
+  /* navegação entre as fotos dentro do modal aberto.                  */
+  /* ---------------------------------------------------------------- */
+  document.querySelectorAll('[data-case-modal]').forEach(function (dialog) {
+    var slides = Array.prototype.slice.call(dialog.querySelectorAll('[data-slide]'));
+    var counter = dialog.querySelector('[data-slide-counter]');
+    var current = 0;
+
+    function show(index) {
+      current = (index + slides.length) % slides.length;
+      slides.forEach(function (img, i) { img.hidden = i !== current; });
+      if (counter) counter.textContent = (current + 1) + ' / ' + slides.length;
+    }
+    if (slides.length) show(0);
+
+    var prevBtn = dialog.querySelector('[data-slide-prev]');
+    var nextBtn = dialog.querySelector('[data-slide-next]');
+    if (prevBtn) prevBtn.addEventListener('click', function () { show(current - 1); });
+    if (nextBtn) nextBtn.addEventListener('click', function () { show(current + 1); });
+
+    dialog.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowLeft') show(current - 1);
+      if (e.key === 'ArrowRight') show(current + 1);
+    });
+
+    var closeBtn = dialog.querySelector('[data-case-close]');
+    if (closeBtn) closeBtn.addEventListener('click', function () { dialog.close(); });
+
+    // clique fora do conteúdo (no backdrop) também fecha
+    dialog.addEventListener('click', function (e) {
+      if (e.target === dialog) dialog.close();
+    });
+  });
+
+  document.querySelectorAll('[data-case-open]').forEach(function (trigger) {
+    trigger.addEventListener('click', function () {
+      var targetId = trigger.getAttribute('data-case-open');
+      var dialog = document.getElementById(targetId);
+      if (dialog && typeof dialog.showModal === 'function') dialog.showModal();
+    });
+  });
 })();

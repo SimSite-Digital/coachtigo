@@ -784,15 +784,17 @@
 /* ---------------------------------------------------------------------- */
 .cases-filter {
   display: flex;
-  gap: var(--space-1);
+  gap: var(--space-2);
   margin-bottom: var(--space-4);
   flex-wrap: wrap;
 }
 .cases-filter__btn {
   height: 40px;
-  padding: 0 18px;
+  padding: 0 20px;
+  border-radius: var(--radius-btn);
   border: 1px solid var(--color-border);
   background: var(--color-white);
+  color: var(--color-navy);
   font-family: var(--font-mono);
   font-size: 12px;
   letter-spacing: .08em;
@@ -800,38 +802,122 @@
   cursor: pointer;
   transition: background-color .2s ease, color .2s ease, border-color .2s ease;
 }
-.cases-filter__btn:hover { border-color: var(--color-navy); }
-.cases-filter__btn.is-active { background: var(--color-navy); border-color: var(--color-navy); color: var(--color-white); }
+.cases-filter__btn:hover { border-color: var(--color-green); color: var(--color-green); }
+.cases-filter__btn.is-active { background: var(--color-green); border-color: var(--color-green); color: var(--color-white); }
 
-.cases-gallery {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: var(--space-3);
-}
-.case-tile {
-  grid-column: span 2;
-  background: var(--color-white);
-  border: 1px solid var(--color-border);
-  box-shadow: var(--card-shadow);
-  padding: var(--card-padding);
-}
+/* grade de cards — reaproveita o mesmo hover dos cards de Conteúdo da Home
+   (sobe 4px, zoom 1.06 na foto, seta desliza): ver .content-grid/.content-card */
+.cases-gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-4); }
+@media (max-width: 900px) { .cases-gallery { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 640px) { .cases-gallery { grid-template-columns: 1fr; } }
 .case-tile[hidden] { display: none; }
-.case-tile--lg {
-  grid-column: span 4;
+.case-tile__type {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 1;
+  background: var(--color-white);
+  color: var(--color-green);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  padding: 5px 12px;
+  border-radius: var(--radius-badge);
+}
+.cases-empty {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: var(--space-6) 0;
+  color: var(--color-gray-dark);
+}
+
+/* ---- Modal "Ver fotos" — <dialog> nativo, acessível ------------------- */
+.case-modal {
+  border: 0;
+  border-radius: var(--radius-card);
+  padding: 0;
+  width: min(900px, calc(100vw - 48px));
+  max-height: min(85vh, 800px);
+  background: var(--color-white);
+}
+.case-modal::backdrop { background: rgba(22, 32, 90, .72); }
+.case-modal__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+}
+.case-modal__close {
+  width: 36px; height: 36px;
+  flex-shrink: 0;
+  border: 1px solid var(--color-border);
+  background: var(--color-white);
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+}
+.case-modal__close:hover { border-color: var(--color-navy); }
+.case-modal__close svg { width: 16px; height: 16px; }
+.case-modal__body { padding: var(--space-4); overflow-y: auto; max-height: calc(min(85vh, 800px) - 90px); }
+.case-modal__stage { position: relative; aspect-ratio: 16/10; background: var(--color-gray-light); overflow: hidden; border-radius: var(--radius-image); }
+.case-modal__stage img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.case-modal__nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  border: 0;
+  background: rgba(255,255,255,.9);
+  color: var(--color-navy);
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+}
+.case-modal__nav:hover { background: var(--color-white); }
+.case-modal__nav svg { width: 18px; height: 18px; }
+.case-modal__nav--prev { left: 12px; }
+.case-modal__nav--next { right: 12px; }
+.case-modal__counter {
+  position: absolute;
+  bottom: 12px; right: 12px;
+  background: rgba(22,32,90,.75);
+  color: var(--color-white);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: var(--radius-badge);
+}
+.case-modal__text { margin-top: var(--space-3); color: var(--color-gray-dark); font-size: 14px; line-height: 1.6; }
+
+/* ---- "Por onde já passamos" — grade de logos do site antigo ----------- */
+.old-logos-grid {
   display: grid;
-  grid-template-columns: 1fr 1.4fr;
-  gap: var(--space-4);
+  grid-template-columns: repeat(6, 1fr);
+  gap: var(--space-3);
   align-items: center;
 }
-@media (max-width: 900px) {
-  .cases-gallery { grid-template-columns: repeat(2, 1fr); }
-  .case-tile { grid-column: span 2; }
-  .case-tile--lg { grid-column: span 2; grid-template-columns: 1fr; }
+@media (max-width: 900px) { .old-logos-grid { grid-template-columns: repeat(4, 1fr); } }
+@media (max-width: 640px) { .old-logos-grid { grid-template-columns: repeat(3, 1fr); } }
+.old-logos-grid__item {
+  background: var(--color-gray-light);
+  border-radius: var(--radius-image);
+  aspect-ratio: 3/2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-2);
 }
-@media (max-width: 640px) {
-  .cases-gallery { grid-template-columns: 1fr; }
-  .case-tile, .case-tile--lg { grid-column: span 1; }
+.old-logos-grid__item img {
+  max-width: 100%;
+  max-height: 100%;
+  mix-blend-mode: multiply;
+  filter: grayscale(1) opacity(.7);
+  transition: filter .25s ease;
 }
+.old-logos-grid__item:hover img { filter: grayscale(0) opacity(1); }
+@media (prefers-reduced-motion: reduce) { .old-logos-grid__item img { transition: none; } }
 
 /* ==========================================================================
    Home — redesenho editorial (briefing B8–B17)
@@ -1241,11 +1327,12 @@
   grid-template-columns: 1.2fr repeat(6, 1fr);
 }
 .m-big { grid-column: 1; grid-row: 1 / 3; }
-.m-exec { grid-column: 2 / 5; }
-.m-pal { grid-column: 5 / 8; }
-.m-ind { grid-column: 2 / 4; }
-.m-ws { grid-column: 4 / 6; }
-.m-form { grid-column: 6 / 8; }
+/* Coaching Executivo saiu do catálogo (não existe no site antigo) — Palestras
+   passou a ocupar a largura dupla inteira da linha de cima sozinha */
+.m-pal { grid-column: 2 / 8; }
+.m-lsc { grid-column: 2 / 4; }
+.m-disc { grid-column: 4 / 6; }
+.m-lider { grid-column: 6 / 8; }
 @media (max-width: 860px) {
   .mosaic { grid-template-columns: 1fr; }
   .mosaic > * { grid-column: auto; grid-row: auto; }
@@ -1465,3 +1552,10 @@
 .carousel__progress-track { width: 64px; height: 2px; background: var(--color-border); overflow: hidden; }
 .carousel__progress-bar { width: 0%; height: 100%; background: var(--color-green); }
 @keyframes carousel-progress { from { width: 0%; } to { width: 100%; } }
+
+/* ---- Catálogo de programas (hub /treinamentos, rodada "ajustes p/ reunião") */
+.program-catalog { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-3); }
+@media (max-width: 760px) { .program-catalog { grid-template-columns: 1fr; } }
+.program-catalog__card { display: flex; flex-direction: column; gap: 8px; scroll-margin-top: calc(var(--header-height) + 16px); }
+.program-catalog__card p { color: var(--color-gray-dark); font-size: 14px; flex-grow: 1; }
+.program-catalog__card .btn--tertiary { align-self: flex-start; }
