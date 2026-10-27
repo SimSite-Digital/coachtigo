@@ -1,2 +1,6 @@
 User-agent: *
-Disallow: /
+Allow: /
+Disallow: /assets/php/
+Disallow: /assets/data/
+
+Sitemap: https://coachtigo.com.br/sitemap.xml
